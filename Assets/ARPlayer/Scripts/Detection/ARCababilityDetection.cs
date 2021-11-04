@@ -12,13 +12,16 @@ public class ARCababilityDetection : MonoBehaviour
         {
             case ARSessionState.None:
             case ARSessionState.CheckingAvailability:
+                Debug.Log("CheckAvailability");
                 yield return ARSession.CheckAvailability();
                 break;
             case ARSessionState.Unsupported:
+                Debug.Log("Unsupported");
                 //
                 break;
             default:
                 arSession.enabled = true;
+                Debug.Log("End");
                 break;
         }
     }

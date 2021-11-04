@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/ARPlayer/Scenes/Main.unity
     guid: 12bc1b60347b7472bb277f595fa3caa0
+  - enabled: 1
+    path: Assets/ARPlayer/Scenes/Additive/ARCapability.unity
+    guid: 197b880c4e995444bad75c03b5a8d442
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 4a89a903658ad4c3b8db3623a5328185, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 52690099fa7a1456896053a98d8a7df7, type: 2}
