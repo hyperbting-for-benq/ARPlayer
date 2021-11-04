@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d5791c8392e854dedb8b662cf96b9eb9
+  m_SerializeEntries:
+  - m_GUID: 197b880c4e995444bad75c03b5a8d442
+    m_Address: Scenes/Additive/ARCapabilityTest
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4aa8ddaf86b924f75ba194dcc0053490
+    m_Address: Scenes/ARMain
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a5ed87bb8349c44fe9b8fe436e0a5adc
+    m_Address: Scenes/Additive/UIDisplay
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: cbb79f8cb9b69406992ce7cfba315a20, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: f84dd430b3f5e4f6f9e2346850938575, type: 2}
+    - {fileID: 11400000, guid: b29534a0b3da644d093bf05b17912718, type: 2}
