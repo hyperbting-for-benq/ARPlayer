@@ -15,14 +15,21 @@ public class ARCababilityDetection : MonoBehaviour
                 Debug.Log("CheckAvailability");
                 yield return ARSession.CheckAvailability();
                 break;
-            case ARSessionState.Unsupported:
-                Debug.Log("Unsupported");
-                //
-                break;
             default:
-                arSession.enabled = true;
-                Debug.Log("End");
+                Debug.LogWarning("Unexpected States");
                 break;
+        }
+        
+        if (ARSession.state == ARSessionState.Unsupported)
+        {
+            // Start some fallback experience for unsupported devices
+            Debug.Log("Unsupported");
+        }
+        else
+        {
+            // Start the AR session
+            arSession.enabled = true;
+            Debug.Log("End");
         }
     }
 }
