@@ -17,16 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d5791c8392e854dedb8b662cf96b9eb9
   m_SerializeEntries:
-  - m_GUID: 197b880c4e995444bad75c03b5a8d442
-    m_Address: Scenes/Additive/ARCapabilityTest
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 4aa8ddaf86b924f75ba194dcc0053490
     m_Address: Scenes/ARMain
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: a5ed87bb8349c44fe9b8fe436e0a5adc
-    m_Address: Scenes/Additive/UIDisplay
+  - m_GUID: 197b880c4e995444bad75c03b5a8d442
+    m_Address: Scenes/Additive/ARCapability
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 0c776f8da30974673ac5f831c723ec0c
