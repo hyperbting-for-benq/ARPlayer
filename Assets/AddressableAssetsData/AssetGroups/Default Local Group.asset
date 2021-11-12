@@ -29,6 +29,10 @@ MonoBehaviour:
     m_Address: Prefabs/ARDefaultPlane
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: f449f47954b488547857331945b74a08
+    m_Address: Prefabs/ARDefaultVerticalPlane
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cbb79f8cb9b69406992ce7cfba315a20, type: 2}
   m_SchemaSet:
