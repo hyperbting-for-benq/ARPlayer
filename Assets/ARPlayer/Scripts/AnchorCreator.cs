@@ -58,6 +58,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     anchor = m_AnchorManager.AttachAnchor(plane, hit.pose);
                     m_AnchorManager.anchorPrefab = oldPrefab;
                     //SetAnchorText(anchor, $"Attached to plane {plane.trackableId}");
+                    Debug.Log($"anchor:{anchor.ToString()} Attached to plane {plane.trackableId}");
                     return anchor;
                 }
             }
@@ -76,7 +77,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             //SetAnchorText(anchor, $"Anchor (from {hit.hitType})");
-
+            Debug.Log($"anchor:{anchor.ToString()} (from {hit.hitType})");
             return anchor;
         }
 
@@ -99,6 +100,22 @@ namespace UnityEngine.XR.ARFoundation.Samples
             {
                 // Raycast hits are sorted by distance, so the first one will be the closest hit.
                 var hit = s_Hits[0];
+
+                if (hit.trackable is ARPlane plane)
+                {
+                    switch (plane.alignment)
+                    {
+                        case PlaneAlignment.Vertical:
+                            if (!CoreManager.sharedARState.IsDisplayingVerticalPlane())
+                                return;
+                            break;
+                        case PlaneAlignment.HorizontalDown:
+                        case PlaneAlignment.HorizontalUp:
+                            if (!CoreManager.sharedARState.IsDisplayingHorizontalPlane())
+                                return;
+                            break;
+                    }
+                }
 
                 // Create a new anchor
                 var anchor = CreateAnchor(hit);

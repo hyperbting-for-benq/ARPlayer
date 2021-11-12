@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,75 +11,70 @@ public class PlaneDisplayManager : MonoBehaviour
     [SerializeField]private ARPlaneManager _arPlaneManager;
     public GameObject verticalPlanePrefab;
     public GameObject horizontalPlanePrefab;
-    
+
+    private void Update()
+    {
+        if (_arPlaneManager != null)
+            CoreManager.sharedARState.CurrentDetectionMode = _arPlaneManager.currentDetectionMode;
+    }
+
     #region Scan
     public void StopPlaneScan()
     {
         _arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
         _arPlaneManager.planePrefab = null;
         
-        Debug.Log(_arPlaneManager.currentDetectionMode.ToString());
+        //Debug.Log(_arPlaneManager.currentDetectionMode.ToString());
     }
     
     public void SetHorizontal()
     {
         _arPlaneManager.planePrefab = horizontalPlanePrefab;
         _arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Horizontal;
-        ShowOnlyPlane(PlaneAlignment.HorizontalUp);
-        Debug.Log(_arPlaneManager.currentDetectionMode.ToString());
+        ShowHorizontalPlaneOnly();
+        
+        //Debug.Log(_arPlaneManager.currentDetectionMode.ToString());
     }
 
     public void SetVertical()
     {
         _arPlaneManager.planePrefab = verticalPlanePrefab;
         _arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Vertical;
-        ShowOnlyPlane(PlaneAlignment.Vertical);
-        Debug.Log(_arPlaneManager.currentDetectionMode.ToString());
+        ShowVerticalPlaneOnly();
+        
+        //Debug.Log(_arPlaneManager.currentDetectionMode.ToString());
     }
     #endregion
     
-    #region Display
+    #region Plane Display
     public void ShowAllPlane(bool show)
     {
         foreach (var plane in _arPlaneManager.trackables)
         {
             plane.gameObject.SetActive(show);
         }
+        CoreManager.sharedARState.currentDisplayMode = PlaneDisplayMode.All;
     }
 
     public void ShowVerticalPlaneOnly()
     {
-        ShowOnlyPlane(PlaneAlignment.Vertical);
+        foreach (var plane in _arPlaneManager.trackables)
+        {
+            plane.gameObject.SetActive(plane.alignment == PlaneAlignment.Vertical);
+        }
+        CoreManager.sharedARState.currentDisplayMode = PlaneDisplayMode.Vertical;
     }
 
-    public void ShowHorizontakPlaneOnly()
+    public void ShowHorizontalPlaneOnly()
     {
         foreach (var plane in _arPlaneManager.trackables)
         {
-            if (plane.alignment == PlaneAlignment.HorizontalDown || plane.alignment == PlaneAlignment.HorizontalUp )
-            {
-                plane.gameObject.SetActive(true);
-            }
-            else
-            {
-                plane.gameObject.SetActive(false);
-            }
+            var toShow = plane.alignment == PlaneAlignment.HorizontalDown || 
+                         plane.alignment == PlaneAlignment.HorizontalUp;
+            plane.gameObject.SetActive(toShow);
         }
-    }
-    
-    public void ShowOnlyPlane(PlaneAlignment alignment)
-    {
-        foreach (var plane in _arPlaneManager.trackables)
-        {
-            if (plane.alignment == alignment)
-            {
-                plane.gameObject.SetActive(true);
-            }
-            else
-            {
-                plane.gameObject.SetActive(false);
-            }
-        }
+        
+        CoreManager.sharedARState.currentDisplayMode = PlaneDisplayMode.Horizontal;
     }
     #endregion
 }
