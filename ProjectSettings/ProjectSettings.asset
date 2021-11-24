@@ -147,6 +147,7 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 4800000, guid: e7c77f6eaab324a819efdc13b8125a39, type: 3}
+  - {fileID: 0}
   - {fileID: -1416112780884985870, guid: 18a71e16413e84edaa986fbe66a12b86, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -237,7 +238,7 @@ PlayerSettings:
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: CKDR68F4S4
-  iOSManualSigningProvisioningProfileID: 8ada24fb-6458-4a22-ab93-325dc4260791
+  iOSManualSigningProvisioningProfileID: c8225f40-b5ef-413a-9e5d-4fec39cdf87f
   tvOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 1
   tvOSManualSigningProvisioningProfileType: 0
