@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-namespace UnityEngine.XR.ARFoundation.Samples
+namespace ARPlayer.Scripts
 {
     [RequireComponent(typeof(ARAnchorManager))]
     [RequireComponent(typeof(ARRaycastManager))]

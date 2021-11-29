@@ -1,70 +1,132 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ARPlayer.Scripts;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.XR.ARSubsystems;
 
-[System.Serializable]
-public class SharedARState
+namespace ARPlayer.Scripts.Data
 {
-    #region CurrentDetectionMode
-    private PlaneDetectionMode _currentDetectionMode;
-    public Action<PlaneDetectionMode> OnCurrentDetectionModeChanged = (pdm)=>{
-        Debug.Log($"OnCurrentDetectionModeChanged {pdm}");
-    };
-    public PlaneDetectionMode CurrentDetectionMode
+    [System.Serializable]
+    public class SharedARState
     {
-        get => _currentDetectionMode;
-        set
-        {
-            if (value == _currentDetectionMode)
-                return;
+        [JsonIgnore] public CoreManager coreManager;
 
-            _currentDetectionMode = value;
-            OnCurrentDetectionModeChanged?.Invoke(_currentDetectionMode);
-        }
-    }
-    #endregion
-    
-    public PlaneDisplayMode currentDisplayMode;
+        #region CoreScannerState
+        public CoreScannerState coreState = CoreScannerState.Unknown;
+        #endregion
+            
+        #region CurrentDetectionMode
+        private PlaneDetectionMode _currentDetectionMode;
+        public Action<PlaneDetectionMode> OnCurrentDetectionModeChanged = (pdm)=>{
+            Debug.Log($"OnCurrentDetectionModeChanged {pdm}");
+        };
+        public PlaneDetectionMode CurrentDetectionMode
+        {
+            get => _currentDetectionMode;
+            set
+            {
+                if (value == _currentDetectionMode)
+                    return;
 
-    //Projector in two type
-    public GameObject horizontalTopObject;
-    public GameObject horizontalBottomObject;
-    
-    //Screen here
-    public GameObject verticalObject;
-    
-    #region Checker
-    public bool IsDisplayingVerticalPlane()
-    {
-        switch (currentDisplayMode)
-        {
-            case PlaneDisplayMode.All:
-            case PlaneDisplayMode.Vertical:
-                return true;    
+                _currentDetectionMode = value;
+                OnCurrentDetectionModeChanged?.Invoke(_currentDetectionMode);
+            }
         }
-        return false;
-    }
+        #endregion
     
-    public bool IsDisplayingHorizontalPlane()
-    {
-        switch (currentDisplayMode)
+        public PlaneDisplayMode currentDisplayMode;
+
+        //Projector in two type
+        private GameObject horizontalObject;
+        public Action OnHorizontalObjectPlaced;
+        public GameObject HorizontalObject
         {
-            case PlaneDisplayMode.All:
-            case PlaneDisplayMode.Horizontal:
-                return true;    
+            get => horizontalObject;
+            set
+            {
+                if (horizontalObject != null && value == horizontalObject)
+                    return;
+
+                horizontalObject = value;
+                OnHorizontalObjectPlaced?.Invoke();
+            }
         }
+
+        //Screen here
+        private GameObject verticalObject;
+        public Action OnVerticalObjectPlaced;
+        public GameObject VerticalObject
+        {
+            get => verticalObject;
+            set
+            {
+                if (verticalObject != null && value == verticalObject)
+                    return;
+
+                verticalObject = value;
+                OnVerticalObjectPlaced?.Invoke();
+            }
+        }
+        [JsonIgnore] public GameObject HorizontalObjectPrefab => coreManager.horizontalPlanePrefab;
+        [JsonIgnore] public GameObject VerticalObjectPrefab => coreManager.verticalPlanePrefab;
+    
+        #region Checker
+        public bool IsDisplayingVerticalPlane()
+        {
+            switch (currentDisplayMode)
+            {
+                case PlaneDisplayMode.All:
+                case PlaneDisplayMode.Vertical:
+                    return true;    
+            }
+            return false;
+        }
+    
+        public bool IsDisplayingHorizontalPlane()
+        {
+            switch (currentDisplayMode)
+            {
+                case PlaneDisplayMode.All:
+                case PlaneDisplayMode.Horizontal:
+                    return true;    
+            }
         
-        return false;
+            return false;
+        }
+        #endregion
+    
+        public override string ToString()
+        {
+            //return JsonUtility.ToJson(this);
+            return JsonConvert.SerializeObject(
+                this,
+                Formatting.Indented,
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                }
+            );
+        }
     }
-    #endregion
-}
 
-public enum PlaneDisplayMode
-{
-    None,
-    All,
-    Vertical,
-    Horizontal
+    public enum PlaneDisplayMode
+    {
+        None,
+        All,
+        Vertical,
+        Horizontal
+    }
+
+    public enum CoreScannerState
+    {
+        Unknown,
+        BeforeScan,
+        ScanningVertical,
+        PlacingScreen,
+        ModifyingScreen,
+        PlacingProjector,
+        ModifyingProjector
+    }
 }
