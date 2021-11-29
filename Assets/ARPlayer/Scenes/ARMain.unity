@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 1188178556}
   - component: {fileID: 1188178558}
   - component: {fileID: 1188178557}
-  - component: {fileID: 1188178559}
+  - component: {fileID: 1188178560}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -391,19 +391,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RaycastPrefab: {fileID: 0}
---- !u!114 &1188178559
+--- !u!114 &1188178560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188178553}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1f72754e102e64e82c0d49cbf2741a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ab0e80cee9cc1d44928bfe488dd1e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Prefab: {fileID: 6399691764261458581, guid: 90bb284262b83b545a2c05c3f39e1c89, type: 3}
+  m_PointCloudPrefab: {fileID: 0}
 --- !u!1001 &46062905437470296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -576,9 +576,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3988633223352878287, guid: ba3e074a626c7804e943d2ee3464bb11, type: 3}
-      propertyPath: arsession
+      propertyPath: m_arsession
       value: 
       objectReference: {fileID: 1088732363}
+    - target: {fileID: 3988633223352878287, guid: ba3e074a626c7804e943d2ee3464bb11, type: 3}
+      propertyPath: m_arsessionOrigin
+      value: 
+      objectReference: {fileID: 1188178554}
     - target: {fileID: 4510697789451742262, guid: ba3e074a626c7804e943d2ee3464bb11, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

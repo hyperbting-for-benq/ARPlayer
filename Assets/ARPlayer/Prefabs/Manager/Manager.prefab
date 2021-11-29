@@ -1754,6 +1754,7 @@ GameObject:
   - component: {fileID: 46062905646633438}
   - component: {fileID: 3988633223352878287}
   - component: {fileID: 46062905646633437}
+  - component: {fileID: 6350166652554288015}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1793,8 +1794,9 @@ MonoBehaviour:
   verticalPlanePrefab: {fileID: 2428612308164641942, guid: f449f47954b488547857331945b74a08, type: 3}
   horizontalObjectPrefab: {fileID: 0}
   verticalObjectPrefab: {fileID: 0}
-  arsession: {fileID: 0}
-  planeDisplayManager: {fileID: 46062905646633437}
+  m_arsessionOrigin: {fileID: 0}
+  m_arsession: {fileID: 0}
+  m_planeDisplayManager: {fileID: 0}
 --- !u!114 &46062905646633437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,6 +1810,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arPlaneManager: {fileID: 0}
+--- !u!114 &6350166652554288015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46062905646633436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1f72754e102e64e82c0d49cbf2741a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Prefab: {fileID: 6399691764261458581, guid: 90bb284262b83b545a2c05c3f39e1c89, type: 3}
 --- !u!1 &1845441895773327596
 GameObject:
   m_ObjectHideFlags: 0

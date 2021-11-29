@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
@@ -5,43 +6,26 @@ using UnityEngine.XR.ARSubsystems;
 
 namespace ARPlayer.Scripts
 {
-    [RequireComponent(typeof(ARAnchorManager))]
-    [RequireComponent(typeof(ARRaycastManager))]
     public class AnchorCreator : MonoBehaviour
     {
-        [SerializeField]
-        GameObject m_Prefab;
-
+        [Header("Debug purpose")]
+        [SerializeField] private GameObject m_Prefab;
         public GameObject prefab
         {
             get => m_Prefab;
             set => m_Prefab = value;
         }
-
+        
         public void RemoveAllAnchors()
         {
             //Logger.Log($"Removing all anchors ({m_Anchors.Count})");
-            foreach (var anchor in m_Anchors)
+            foreach (var anchor in CoreManager.SharedARState.MyARAnchors)
             {
                 Destroy(anchor.gameObject);
             }
-            m_Anchors.Clear();
-        }
 
-        void Awake()
-        {
-            m_RaycastManager = GetComponent<ARRaycastManager>();
-            m_AnchorManager = GetComponent<ARAnchorManager>();
+            CoreManager.SharedARState.CleanAnchors();
         }
-
-        // void SetAnchorText(ARAnchor anchor, string text)
-        // {
-        //     var canvasTextManager = anchor.GetComponent<CanvasTextManager>();
-        //     if (canvasTextManager)
-        //     {
-        //         canvasTextManager.text = text;
-        //     }
-        // }
 
         ARAnchor CreateAnchor(in ARRaycastHit hit)
         {
@@ -50,14 +34,14 @@ namespace ARPlayer.Scripts
             // If we hit a plane, try to "attach" the anchor to the plane
             if (hit.trackable is ARPlane plane)
             {
-                var planeManager = GetComponent<ARPlaneManager>();
-                if (planeManager)
+                if (CoreManager.SharedARManager.MyARPlaneManager)
                 {
                     //Logger.Log("Creating anchor attachment.");
-                    var oldPrefab = m_AnchorManager.anchorPrefab;
-                    m_AnchorManager.anchorPrefab = prefab;
-                    anchor = m_AnchorManager.AttachAnchor(plane, hit.pose);
-                    m_AnchorManager.anchorPrefab = oldPrefab;
+                    var myARAnchorManager = CoreManager.SharedARManager.MyARAnchorManager;
+                    var oldPrefab = myARAnchorManager.anchorPrefab;
+                    myARAnchorManager.anchorPrefab = prefab;
+                    anchor = myARAnchorManager.AttachAnchor(plane, hit.pose);
+                    myARAnchorManager.anchorPrefab = oldPrefab;
                     //SetAnchorText(anchor, $"Attached to plane {plane.trackableId}");
                     Debug.Log($"anchor:{anchor.ToString()} Attached to plane {plane.trackableId}");
                     return anchor;
@@ -97,7 +81,7 @@ namespace ARPlayer.Scripts
                 TrackableType.PlaneWithinPolygon;
 
             // Perform the raycast
-            if (!m_RaycastManager.Raycast(touch.position, s_Hits, trackableTypes))
+            if (!CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, trackableTypes))
             {
                 return;
             }
@@ -128,7 +112,7 @@ namespace ARPlayer.Scripts
             if (anchor)
             {
                 // Remember the anchor so we can remove it later.
-                m_Anchors.Add(anchor);
+                CoreManager.SharedARState.MyARAnchors.Add(anchor);
             }
             else
             {
@@ -137,11 +121,5 @@ namespace ARPlayer.Scripts
         }
 
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
-
-        List<ARAnchor> m_Anchors = new List<ARAnchor>();
-
-        ARRaycastManager m_RaycastManager;
-
-        ARAnchorManager m_AnchorManager;
     }
 }

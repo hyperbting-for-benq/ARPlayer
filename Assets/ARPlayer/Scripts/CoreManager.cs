@@ -1,6 +1,7 @@
 using ARPlayer.Scripts.Data;
 using ARPlayer.Scripts.Detection;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.XR.ARFoundation;
 
 namespace ARPlayer.Scripts
@@ -8,6 +9,7 @@ namespace ARPlayer.Scripts
     public class CoreManager : MonoBehaviour
     {
         public static SharedARState SharedARState;
+        public static SharedARManager SharedARManager;
         
         public GameObject horizontalPlanePrefab;
         public GameObject verticalPlanePrefab;
@@ -18,6 +20,7 @@ namespace ARPlayer.Scripts
         private void OnEnable()
         {
             SharedARState = new SharedARState { coreManager = this };
+            SharedARManager = new SharedARManager { coreManager = this, arsessionOrigin = m_arsessionOrigin, arsession = m_arsession };
         }
 
         private void OnDisable()
@@ -34,7 +37,8 @@ namespace ARPlayer.Scripts
         #endregion
 
         [Header("Script Ref")]
-        [SerializeField]private ARSession arsession;
+        [SerializeField]private ARSessionOrigin m_arsessionOrigin;
+        [SerializeField]private ARSession m_arsession;
         
         [ContextMenu("Reset CoreScannerState")]
         public void ResetCoreScannerState()
@@ -53,9 +57,21 @@ namespace ARPlayer.Scripts
             }
             
             //Remove Planes
-            arsession.Reset();
+            m_arsession.Reset();
         }
-        [SerializeField]private PlaneDisplayManager planeDisplayManager;
+        
+        [SerializeField]private PlaneDisplayManager m_planeDisplayManager;
+        public PlaneDisplayManager planeDisplayManager
+        {
+            get
+            {
+                if (m_planeDisplayManager == null)
+                    m_planeDisplayManager = GetComponent<PlaneDisplayManager>();
+                
+                return m_planeDisplayManager;
+            }
+        }
+
         [ContextMenu("ScanningScreenAnPlace State")]
         public void EnterScanningScreenState()
         {

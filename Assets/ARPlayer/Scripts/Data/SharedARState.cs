@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ARPlayer.Scripts;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 namespace ARPlayer.Scripts.Data
@@ -71,7 +72,21 @@ namespace ARPlayer.Scripts.Data
         }
         [JsonIgnore] public GameObject HorizontalObjectPrefab => coreManager.horizontalPlanePrefab;
         [JsonIgnore] public GameObject VerticalObjectPrefab => coreManager.verticalPlanePrefab;
-    
+        
+        #region Anchor
+        private List<ARAnchor> m_Anchors = new List<ARAnchor>();
+        public List<ARAnchor> MyARAnchors
+        {
+            get => m_Anchors;
+            set => m_Anchors = value;
+        }
+
+        public void CleanAnchors()
+        {
+            MyARAnchors.Clear();
+        }
+        #endregion
+        
         #region Checker
         public bool IsDisplayingVerticalPlane()
         {
