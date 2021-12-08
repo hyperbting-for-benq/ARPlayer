@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 0.2
   preloadedAssets:
   - {fileID: 0}
   - {fileID: 0}
@@ -235,7 +235,7 @@ PlayerSettings:
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: CKDR68F4S4
-  iOSManualSigningProvisioningProfileID: b5bfbc3a-ae0d-4658-8540-7dc6232382bf
+  iOSManualSigningProvisioningProfileID: c8225f40-b5ef-413a-9e5d-4fec39cdf87f
   tvOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 1
   tvOSManualSigningProvisioningProfileType: 0
