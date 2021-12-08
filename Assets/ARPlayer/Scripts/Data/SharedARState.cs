@@ -12,68 +12,121 @@ namespace ARPlayer.Scripts.Data
     [System.Serializable]
     public class SharedARState
     {
+        #region Constructor/ Destructor
+        public SharedARState()
+        {
+        }
+        
+        ~SharedARState()
+        {
+        }
+        #endregion
+        
         [JsonIgnore] public CoreManager coreManager;
 
         #region CoreScannerState
-        public CoreScannerState coreState = CoreScannerState.Unknown;
+        private CoreScannerState m_CoreState = CoreScannerState.Unknown;
+        public CoreScannerState CoreState
+        {
+            get => m_CoreState;
+            set
+            {
+                if (m_CoreState == value)
+                    return;
+
+                var preState = m_CoreState;
+                m_CoreState = value;
+                OnCoreStateChanged?.Invoke(preState, m_CoreState);
+            }
+        }
+        
+        public Action<CoreScannerState,CoreScannerState> OnCoreStateChanged = (oldState, newState)=>
+        {
+            Debug.Log($"SharedARState.DefaultOnCoreStateChanged [{oldState}] => [{newState}]");
+        };
         #endregion
             
         #region CurrentDetectionMode
-        private PlaneDetectionMode _currentDetectionMode;
+        private PlaneDetectionMode m_CurrentDetectionMode;
         public Action<PlaneDetectionMode> OnCurrentDetectionModeChanged = (pdm)=>{
-            Debug.Log($"OnCurrentDetectionModeChanged {pdm}");
+            Debug.Log($"SharedARState.DefaultOOnCurrentDetectionModeChanged [{pdm}]");
         };
         public PlaneDetectionMode CurrentDetectionMode
         {
-            get => _currentDetectionMode;
+            get => m_CurrentDetectionMode;
             set
             {
-                if (value == _currentDetectionMode)
+                if (value == m_CurrentDetectionMode)
                     return;
 
-                _currentDetectionMode = value;
-                OnCurrentDetectionModeChanged?.Invoke(_currentDetectionMode);
+                m_CurrentDetectionMode = value;
+                OnCurrentDetectionModeChanged?.Invoke(m_CurrentDetectionMode);
             }
         }
         #endregion
     
         public PlaneDisplayMode currentDisplayMode;
 
+        #region InWorld ARAnchor
         //Projector in two type
-        private GameObject horizontalObject;
-        public Action OnHorizontalObjectPlaced;
-        public GameObject HorizontalObject
+        private ARAnchor m_HorizontalObject;
+        public ARAnchor HorizontalObject
         {
-            get => horizontalObject;
+            get => m_HorizontalObject;
             set
             {
-                if (horizontalObject != null && value == horizontalObject)
+                if (m_HorizontalObject != null && value == m_HorizontalObject)
                     return;
 
-                horizontalObject = value;
+                m_HorizontalObject = value;
                 OnHorizontalObjectPlaced?.Invoke();
             }
         }
-
-        //Screen here
-        private GameObject verticalObject;
-        public Action OnVerticalObjectPlaced;
-        public GameObject VerticalObject
+        [ContextMenu("Debug HorizontalObject")]
+        private void DebugHorizontalObject()
         {
-            get => verticalObject;
+            Debug.Log($"HorizontalObject?:{m_HorizontalObject==null}; {m_HorizontalObject?.ToString()}");
+        }
+        
+        public bool IsHorizontalObjectet()
+        {
+            return !m_HorizontalObject;
+        }
+        
+        public Action OnHorizontalObjectPlaced;
+        
+        //Screen here
+        private ARAnchor m_VerticalObject;
+        public ARAnchor VerticalObject
+        {
+            get => m_VerticalObject;
             set
             {
-                if (verticalObject != null && value == verticalObject)
+                if (m_VerticalObject != null && value == m_VerticalObject)
                     return;
 
-                verticalObject = value;
+                m_VerticalObject = value;
                 OnVerticalObjectPlaced?.Invoke();
             }
         }
+
+        [ContextMenu("Debug VerticalARAnchor")]
+        private void DebugVerticalARAnchor()
+        {
+            Debug.Log($"VerticalObject?:{m_VerticalObject==null}; {m_VerticalObject?.ToString()}");
+        }
+
+        public bool IsVerticalObjectSet()
+        {
+            return !m_VerticalObject;
+        }
+        
+        public Action OnVerticalObjectPlaced;
+
         [JsonIgnore] public GameObject HorizontalObjectPrefab => coreManager.horizontalPlanePrefab;
         [JsonIgnore] public GameObject VerticalObjectPrefab => coreManager.verticalPlanePrefab;
-        
-        #region Anchor
+
+        #region Anchors
         private List<ARAnchor> m_Anchors = new List<ARAnchor>();
         public List<ARAnchor> MyARAnchors
         {
@@ -85,6 +138,7 @@ namespace ARPlayer.Scripts.Data
         {
             MyARAnchors.Clear();
         }
+        #endregion
         #endregion
         
         #region Checker
