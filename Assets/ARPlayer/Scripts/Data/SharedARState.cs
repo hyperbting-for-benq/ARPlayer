@@ -24,27 +24,27 @@ namespace ARPlayer.Scripts.Data
         
         [JsonIgnore] public CoreManager coreManager;
 
-        #region CoreScannerState
-        private CoreScannerState m_CoreState = CoreScannerState.Unknown;
-        public CoreScannerState CoreState
-        {
-            get => m_CoreState;
-            set
-            {
-                if (m_CoreState == value)
-                    return;
-
-                var preState = m_CoreState;
-                m_CoreState = value;
-                OnCoreStateChanged?.Invoke(preState, m_CoreState);
-            }
-        }
+        // #region CoreScannerState
+        // private CoreScannerState m_CoreState = CoreScannerState.Unknown;
+        // public CoreScannerState CoreState
+        // {
+        //     get => m_CoreState;
+        //     set
+        //     {
+        //         if (m_CoreState == value)
+        //             return;
+        //
+        //         var preState = m_CoreState;
+        //         m_CoreState = value;
+        //         OnCoreStateChanged?.Invoke(preState, m_CoreState);
+        //     }
+        // }
         
-        public Action<CoreScannerState,CoreScannerState> OnCoreStateChanged = (oldState, newState)=>
-        {
-            Debug.Log($"SharedARState.DefaultOnCoreStateChanged [{oldState}] => [{newState}]");
-        };
-        #endregion
+        // public Action<CoreScannerState,CoreScannerState> OnCoreStateChanged = (oldState, newState)=>
+        // {
+        //     Debug.Log($"SharedARState.DefaultOnCoreStateChanged [{oldState}] => [{newState}]");
+        // };
+        // #endregion
             
         #region CurrentDetectionMode
         private PlaneDetectionMode m_CurrentDetectionMode;
@@ -88,7 +88,7 @@ namespace ARPlayer.Scripts.Data
             Debug.Log($"HorizontalObject?:{m_HorizontalObject==null}; {m_HorizontalObject?.ToString()}");
         }
         
-        public bool IsHorizontalObjectet()
+        public bool IsHorizontalObjectSet()
         {
             return !m_HorizontalObject;
         }
@@ -188,14 +188,14 @@ namespace ARPlayer.Scripts.Data
         Horizontal
     }
 
-    public enum CoreScannerState
-    {
-        Unknown,
-        BeforeScan,
-        ScanningVertical,
-        PlacingScreen,
-        ModifyingScreen,
-        PlacingProjector,
-        ModifyingProjector
-    }
+    // public enum CoreScannerState
+    // {
+    //     Unknown,
+    //     BeforeScan,
+    //     ScanningVertical,
+    //     PlacingScreen,
+    //     ModifyingScreen,
+    //     PlacingProjector,
+    //     ModifyingProjector
+    // }
 }

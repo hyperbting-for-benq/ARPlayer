@@ -24,7 +24,7 @@ namespace ARPlayer.Scripts
             SharedARState = new SharedARState { coreManager = this };
             SharedARManager = new SharedARManager { coreManager = this, arsessionOrigin = m_arsessionOrigin, arsession = m_arsession };
 
-            EnterScanningScreenState();
+            //EnterScanningScreenState();
         }
 
         private void OnDisable()
@@ -44,25 +44,25 @@ namespace ARPlayer.Scripts
         [SerializeField]private ARSessionOrigin m_arsessionOrigin;
         [SerializeField]private ARSession m_arsession;
         
-        [ContextMenu("-Reset CoreScannerState")]
-        public void ResetCoreScannerState()
-        {
-            SharedARState.CoreState = CoreScannerState.BeforeScan;
-            
-            //Remove Screen, Projector
-            if(SharedARState.VerticalObject != null)
-            {
-                Destroy(SharedARState.VerticalObject);
-            }
-            
-            if(SharedARState.HorizontalObject != null)
-            {
-                Destroy(SharedARState.HorizontalObject);
-            }
-            
-            //Remove Planes
-            m_arsession.Reset();
-        }
+        // [ContextMenu("-Reset CoreScannerState")]
+        // public void ResetCoreScannerState()
+        // {
+        //     SharedARState.CoreState = CoreScannerState.BeforeScan;
+        //     
+        //     //Remove Screen, Projector
+        //     if(SharedARState.VerticalObject != null)
+        //     {
+        //         Destroy(SharedARState.VerticalObject);
+        //     }
+        //     
+        //     if(SharedARState.HorizontalObject != null)
+        //     {
+        //         Destroy(SharedARState.HorizontalObject);
+        //     }
+        //     
+        //     //Remove Planes
+        //     m_arsession.Reset();
+        // }
         
         private PlaneDisplayManager m_planeDisplayManager;
         public PlaneDisplayManager planeDisplayManager
@@ -76,37 +76,40 @@ namespace ARPlayer.Scripts
             }
         }
 
-        [ContextMenu("-ScanningScreenAnPlace State")]
-        public void EnterScanningScreenState()
-        {
-            Debug.Log("CoreManager.EnterScanningScreenState");
-            SharedARState.CoreState = CoreScannerState.PlacingScreen;
-            
-            //Allow Scanning Vertical;
-            //Allow Vertical Place Interaction;
-            planeDisplayManager.SetVerticalScanningAndInteraction();
-        }
+        // [ContextMenu("-ScanningScreenAnPlace State")]
+        // public void EnterScanningScreenState()
+        // {
+        //     Debug.Log("CoreManager.EnterScanningScreenState");
+        //     SharedARState.CoreState = CoreScannerState.PlacingScreen;
+        //     
+        //     //Allow Scanning Vertical;
+        //     //Allow Vertical Place Interaction;
+        //     planeDisplayManager.SetVerticalScanningAndInteraction();
+        //     
+        //     //SharedARManager.OnARRaycastHit += 
+        //     //SharedARState.OnVerticalObjectPlaced +=
+        // }
         
-        [ContextMenu("-ScreenPointed State")]
-        public void EnterScreenFirstPlacedState()
-        {
-            Debug.Log("CoreManager.EnterScreenFirstPlacedState");
-            SharedARState.CoreState = CoreScannerState.ModifyingScreen;
-            
-            //Stop scanning; Disable AllPlaneInteraction
-            planeDisplayManager.StopPlaneScan();
-            planeDisplayManager.EnableAllPlaneInteraction(false);
-            
-            //Allow/Show ScreenObjectMoveAround UI
-            
-        }
+        // [ContextMenu("-ScreenPointed State")]
+        // public void EnterScreenFirstPlacedState()
+        // {
+        //     Debug.Log("CoreManager.EnterScreenFirstPlacedState");
+        //     SharedARState.CoreState = CoreScannerState.ModifyingScreen;
+        //     
+        //     //Stop scanning; Disable AllPlaneInteraction
+        //     planeDisplayManager.StopPlaneScan();
+        //     planeDisplayManager.EnableAllPlaneInteraction(false);
+        //     
+        //     //Allow/Show ScreenObjectMoveAround UI
+        //     
+        // }
         
-        [ContextMenu("-ScreenRelocation State")]
-        public void EnterScreenPlaceModificationState()
-        {
-            
-            Debug.Log("CoreManager.EnterScreenPlaceModificationState");
-            SharedARState.CoreState = CoreScannerState.ModifyingScreen;
-        }
+        // [ContextMenu("-ScreenRelocation State")]
+        // public void EnterScreenPlaceModificationState()
+        // {
+        //     
+        //     Debug.Log("CoreManager.EnterScreenPlaceModificationState");
+        //     SharedARState.CoreState = CoreScannerState.ModifyingScreen;
+        // }
     }
 }
