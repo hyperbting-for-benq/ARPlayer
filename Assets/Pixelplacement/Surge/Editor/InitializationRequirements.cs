@@ -25,12 +25,12 @@ namespace Pixelplacement
                 if (item.GetComponent<Initialization> () == null) item.gameObject.AddComponent<Initialization> ();	
             }
 
-            //display object:
-            DisplayObject[] displayObjects = Resources.FindObjectsOfTypeAll<DisplayObject> ();
-            foreach (DisplayObject item in displayObjects) 
-            {
-                if (item.GetComponent<Initialization> () == null) item.gameObject.AddComponent<Initialization> ();	
-            }
+            // //display object:
+            // DisplayObject[] displayObjects = Resources.FindObjectsOfTypeAll<DisplayObject> ();
+            // foreach (DisplayObject item in displayObjects) 
+            // {
+            //     if (item.GetComponent<Initialization> () == null) item.gameObject.AddComponent<Initialization> ();	
+            // }
 
             //singleton (generics require some hackery to find what we need):
             foreach (GameObject item in Resources.FindObjectsOfTypeAll<GameObject> ()) 
