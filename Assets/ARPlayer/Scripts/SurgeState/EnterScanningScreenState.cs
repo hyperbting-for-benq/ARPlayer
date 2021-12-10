@@ -1,8 +1,8 @@
-using Pixelplacement;
+using UnityEngine;
 
 namespace ARPlayer.Scripts.SurgeState
 {
-    public class EnterScanningScreenState : State
+    public class EnterScanningScreenState : Pixelplacement.State
     {
         private void OnEnable()
         {

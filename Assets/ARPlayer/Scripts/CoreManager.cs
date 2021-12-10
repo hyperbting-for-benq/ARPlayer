@@ -19,6 +19,7 @@ namespace ARPlayer.Scripts
 
         public GameObject ARAnchorPrefab;
         
+        [Header("Object Prefab")]
         public GameObject horizontalObjectPrefab;
         public GameObject verticalObjectPrefab;
     
@@ -62,6 +63,27 @@ namespace ARPlayer.Scripts
         }
 
         #region Debug ContextMenu
+        public void ResetState()
+        {
+            myFSM.ChangeState(myFSM.defaultState); 
+        }
+
+        public void NextState()
+        {
+            myFSM.Next();
+        }
+
+        public void GoToScanningScreenState()
+        {
+            myFSM.ChangeState(1);
+        }
+
+        [ContextMenu("-BeforeScan State")]
+        public void EnterBeforeScanState()
+        {
+            SharedARManager.EnterBeforeScanState();
+        }
+        
         [ContextMenu("-ScanningScreenAnPlace State")]
         public void EnterScanningScreenState()
         {

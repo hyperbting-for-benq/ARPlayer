@@ -1,14 +1,15 @@
-using Pixelplacement;
 using UnityEngine;
 
 namespace ARPlayer.Scripts.SurgeState
 {
-    public class EnterScreenModificationState : State
+    public class EnterScreenModificationState : Pixelplacement.State
     {
         private void OnEnable()
         {
             Debug.Log("EnterScreenModificationState.OnEnable");
             
+            // TryGet Vertical Anchor OR GOTOPreviousState
+
             //TODO: Allow/Show ScreenObjectMoveAround UI
             //CoreManager.SharedARManager.EnterScreenModificationState();
         }

@@ -1,9 +1,8 @@
-using Pixelplacement;
 using UnityEngine;
 
 namespace ARPlayer.Scripts.SurgeState
 {
-    public class BeforeScanState : State
+    public class BeforeScanState : Pixelplacement.State
     {
         private void OnEnable()
         {
