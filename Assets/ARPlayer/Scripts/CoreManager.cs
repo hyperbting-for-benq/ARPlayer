@@ -22,9 +22,11 @@ namespace ARPlayer.Scripts
         private void OnEnable()
         {
             SharedARState = new SharedARState { coreManager = this };
-            SharedARManager = new SharedARManager { coreManager = this, arsessionOrigin = m_arsessionOrigin, arsession = m_arsession };
-
-            //EnterScanningScreenState();
+            SharedARManager = new SharedARManager { 
+                coreManager = this, 
+                sharedState = SharedARState,
+                arsessionOrigin = m_arsessionOrigin, 
+                arsession = m_arsession };
         }
 
         private void OnDisable()
@@ -43,27 +45,7 @@ namespace ARPlayer.Scripts
         [Header("Script Ref")]
         [SerializeField]private ARSessionOrigin m_arsessionOrigin;
         [SerializeField]private ARSession m_arsession;
-        
-        // [ContextMenu("-Reset CoreScannerState")]
-        // public void ResetCoreScannerState()
-        // {
-        //     SharedARState.CoreState = CoreScannerState.BeforeScan;
-        //     
-        //     //Remove Screen, Projector
-        //     if(SharedARState.VerticalObject != null)
-        //     {
-        //         Destroy(SharedARState.VerticalObject);
-        //     }
-        //     
-        //     if(SharedARState.HorizontalObject != null)
-        //     {
-        //         Destroy(SharedARState.HorizontalObject);
-        //     }
-        //     
-        //     //Remove Planes
-        //     m_arsession.Reset();
-        // }
-        
+
         private PlaneDisplayManager m_planeDisplayManager;
         public PlaneDisplayManager planeDisplayManager
         {

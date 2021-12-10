@@ -7,6 +7,7 @@ namespace ARPlayer.Scripts.Data
     public class SharedARManager
     {
         public CoreManager coreManager;
+        public SharedARState sharedState;
         public ARSessionOrigin arsessionOrigin; 
         public ARSession arsession;
 
@@ -19,6 +20,29 @@ namespace ARPlayer.Scripts.Data
         ~SharedARManager()
         {
             OnARRaycastHit -= DefaultOnARRaycastHit;
+        }
+        #endregion
+        
+        #region
+        public void ResetArSession()
+        {
+            arsession.Reset();
+        }
+        
+        public void TryRemoveProjector()
+        {
+            if (!sharedState.IsHorizontalObjectSet())
+                return;
+
+            GameObject.Destroy(sharedState.HorizontalObject);
+        }
+        
+        public void TryRemoveScreen()
+        {
+            if (!sharedState.IsVerticalObjectSet())
+                return;
+
+            GameObject.Destroy(sharedState.VerticalObject);
         }
         #endregion
         
@@ -70,7 +94,9 @@ namespace ARPlayer.Scripts.Data
                 // do something with aranchor
             }
         }
-
+        #endregion
+        
+        #region ARAnchor
         bool TryAttachARAnchor(ARRaycastHit hit, out ARAnchor anchor)
         { 
             anchor = null;

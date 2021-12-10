@@ -19,10 +19,6 @@ namespace ARPlayer.Scripts
         public void RemoveAllAnchors()
         {
             //Logger.Log($"Removing all anchors ({m_Anchors.Count})");
-            foreach (var anchor in CoreManager.SharedARState.MyARAnchors)
-            {
-                Destroy(anchor.gameObject);
-            }
 
             CoreManager.SharedARState.CleanAnchors();
         }

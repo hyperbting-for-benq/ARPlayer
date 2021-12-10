@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ARPlayer.Scripts;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
@@ -24,28 +23,6 @@ namespace ARPlayer.Scripts.Data
         
         [JsonIgnore] public CoreManager coreManager;
 
-        // #region CoreScannerState
-        // private CoreScannerState m_CoreState = CoreScannerState.Unknown;
-        // public CoreScannerState CoreState
-        // {
-        //     get => m_CoreState;
-        //     set
-        //     {
-        //         if (m_CoreState == value)
-        //             return;
-        //
-        //         var preState = m_CoreState;
-        //         m_CoreState = value;
-        //         OnCoreStateChanged?.Invoke(preState, m_CoreState);
-        //     }
-        // }
-        
-        // public Action<CoreScannerState,CoreScannerState> OnCoreStateChanged = (oldState, newState)=>
-        // {
-        //     Debug.Log($"SharedARState.DefaultOnCoreStateChanged [{oldState}] => [{newState}]");
-        // };
-        // #endregion
-            
         #region CurrentDetectionMode
         private PlaneDetectionMode m_CurrentDetectionMode;
         public Action<PlaneDetectionMode> OnCurrentDetectionModeChanged = (pdm)=>{
@@ -94,7 +71,7 @@ namespace ARPlayer.Scripts.Data
         }
         
         public Action OnHorizontalObjectPlaced;
-        
+
         //Screen here
         private ARAnchor m_VerticalObject;
         public ARAnchor VerticalObject
@@ -122,23 +99,20 @@ namespace ARPlayer.Scripts.Data
         }
         
         public Action OnVerticalObjectPlaced;
-
+        
         [JsonIgnore] public GameObject HorizontalObjectPrefab => coreManager.horizontalPlanePrefab;
         [JsonIgnore] public GameObject VerticalObjectPrefab => coreManager.verticalPlanePrefab;
 
-        #region Anchors
-        private List<ARAnchor> m_Anchors = new List<ARAnchor>();
-        public List<ARAnchor> MyARAnchors
-        {
-            get => m_Anchors;
-            set => m_Anchors = value;
-        }
-
+        public Dictionary<Guid, ARAnchor> anchors = new Dictionary<Guid, ARAnchor>();
         public void CleanAnchors()
         {
-            MyARAnchors.Clear();
+            foreach (var kvp in anchors)
+            {
+                GameObject.Destroy(kvp.Value.gameObject);
+            }
+            
+            anchors.Clear();
         }
-        #endregion
         #endregion
         
         #region Checker
