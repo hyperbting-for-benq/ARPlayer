@@ -18,8 +18,11 @@ namespace Pixelplacement
     {
         //Private Variables:
         StateMachine _stateMachine;
+        
+        #if SURGE_DISPLAY_OBJECT
         //DisplayObject _displayObject;
-
+        #endif
+        
         //Init:
         void Awake()
         {
@@ -28,11 +31,14 @@ namespace Pixelplacement
 
             //values:
             _stateMachine = GetComponent<StateMachine>();
-            //_displayObject = GetComponent<DisplayObject>();
+            
+            #if SURGE_DISPLAY_OBJECT
+            _displayObject = GetComponent<DisplayObject>();
 
-            ////display object initialization:
-            //if (_displayObject != null) _displayObject.Register();
-
+            //display object initialization:
+            if (_displayObject != null) _displayObject.Register();
+            #endif
+            
             //state machine initialization:
             if (_stateMachine != null) _stateMachine.Initialize();
         }

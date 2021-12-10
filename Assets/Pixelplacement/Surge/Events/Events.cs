@@ -14,9 +14,11 @@ namespace Pixelplacement
     [System.Serializable]
     public class GameObjectEvent : UnityEvent<GameObject> { }
 
+    #if SURGE_COLLIDER_BUTTON
     // [System.Serializable]
     // public class ColliderButtonEvent : UnityEvent<ColliderButton> { }
-
+    #endif
+    
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
 }
