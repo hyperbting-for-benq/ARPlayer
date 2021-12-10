@@ -1,17 +1,17 @@
-using System;
-using ARPlayer.Scripts;
-using UnityEngine;
 using Pixelplacement;
 
-public class EnterScanningScreenState : State
+namespace ARPlayer.Scripts.SurgeState
 {
-    private void OnEnable()
+    public class EnterScanningScreenState : State
     {
-        CoreManager.SharedARManager.EnterScanningScreenState();
-    }
+        private void OnEnable()
+        {
+            CoreManager.SharedARManager.EnterScanningScreenState();
+        }
 
-    private void OnDisable()
-    {
-        CoreManager.SharedARManager.LeaveScanningScreenState();
+        private void OnDisable()
+        {
+            CoreManager.SharedARManager.LeaveScanningScreenState();
+        }
     }
 }

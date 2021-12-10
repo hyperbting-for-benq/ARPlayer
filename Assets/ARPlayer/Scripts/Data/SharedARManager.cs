@@ -15,12 +15,10 @@ namespace ARPlayer.Scripts.Data
         #region Constructor/ Destructor
         public SharedARManager()
         {
-            OnARRaycastHit += DefaultOnARRaycastHit;
         }
 
         ~SharedARManager()
         {
-            OnARRaycastHit -= DefaultOnARRaycastHit;
         }
         #endregion
         
@@ -86,11 +84,10 @@ namespace ARPlayer.Scripts.Data
         #endregion
         
         #region ARRaycastHit
-        public Action<ARRaycastHit> OnARRaycastHit;
-        void DefaultOnARRaycastHit(ARRaycastHit arrh)
+        public Action<ARRaycastHit> OnARRaycastHit = (arrh) =>
         {
             Debug.Log($"OnARRaycastHit: {arrh.trackableId} {arrh.hitType} {arrh.pose}");
-        }
+        };
         #endregion
         
         #region ARAnchor CRUD
@@ -143,6 +140,33 @@ namespace ARPlayer.Scripts.Data
         }
         #endregion
         
+        #region States
+        #region BeforeScanState
+        public void EnterBeforeScanState()
+        {
+            Debug.Log("SharedARManager.EnterBeforeScanState");
+            //Reset
+            // Remove Screen
+            TryRemoveScreen();
+            // Remove Projector
+            TryRemoveProjector();
+        
+            // Remove Planes
+            ResetArSession();
+        
+            //Remove ARAnchor
+            CleanAnchors();
+        
+            //TODO: Show UI to Next State
+        }
+
+        public void LeaveBeforeScanState()
+        {
+            Debug.Log("SharedARManager.LeaveBeforeScanState");
+            //TODO: Close UI Above
+        }
+        #endregion
+        #region ScanningScreenState
         public void EnterScanningScreenState()
         {
             Debug.Log("SharedARManager.EnterScanningScreenState");
@@ -187,5 +211,7 @@ namespace ARPlayer.Scripts.Data
         {
             coreManager.myFSM.Next();
         }
+        #endregion
+        #endregion
     }
 }

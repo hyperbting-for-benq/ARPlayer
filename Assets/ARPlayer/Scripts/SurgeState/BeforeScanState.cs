@@ -1,32 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using ARPlayer.Scripts;
-using UnityEngine;
 using Pixelplacement;
+using UnityEngine;
 
-public class BeforeScanState : State
+namespace ARPlayer.Scripts.SurgeState
 {
-    private void OnEnable()
+    public class BeforeScanState : State
     {
-        Debug.Log("BeforeScanState.OnEnable");
-        
-        //Reset
-        // Remove Screen
-        CoreManager.SharedARManager.TryRemoveScreen();
-        // Remove Projector
-        CoreManager.SharedARManager.TryRemoveProjector();
-        
-        // Remove Planes
-        CoreManager.SharedARManager.ResetArSession();
-        
-        //Remove ARAnchor
-        CoreManager.SharedARManager.CleanAnchors();
-        
-        //TODO: Show UI to Next State
-    }
+        private void OnEnable()
+        {
+            CoreManager.SharedARManager.EnterBeforeScanState();
+        }
 
-    private void OnDisable()
-    {
-        Debug.Log("BeforeScanState.OnDisable");
+        private void OnDisable()
+        {
+            CoreManager.SharedARManager.LeaveBeforeScanState();
+        }
     }
 }

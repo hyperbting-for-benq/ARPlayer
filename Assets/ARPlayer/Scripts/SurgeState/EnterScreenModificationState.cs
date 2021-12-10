@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Pixelplacement;
+using UnityEngine;
 
-public class EnterScreenModificationState : State
+namespace ARPlayer.Scripts.SurgeState
 {
-    private void OnEnable()
+    public class EnterScreenModificationState : State
     {
-        Debug.Log("EnterScreenModificationState.OnEnable");
-        
-        //     //Stop scanning; Disable AllPlaneInteraction
-        //     planeDisplayManager.StopPlaneScan();
-        //     planeDisplayManager.EnableAllPlaneInteraction(false);
-        //     
-        //     //Allow/Show ScreenObjectMoveAround UI
-    }
+        private void OnEnable()
+        {
+            Debug.Log("EnterScreenModificationState.OnEnable");
+            
+            //TODO: Allow/Show ScreenObjectMoveAround UI
+            //CoreManager.SharedARManager.EnterScreenModificationState();
+        }
 
-    private void OnDisable()
-    {
-        Debug.Log("EnterScreenModificationState.OnDisable");
+        private void OnDisable()
+        {
+            Debug.Log("EnterScreenModificationState.OnDisable");
+            //CoreManager.SharedARManager.LeaveScreenModificationState();
+        }
     }
 }
