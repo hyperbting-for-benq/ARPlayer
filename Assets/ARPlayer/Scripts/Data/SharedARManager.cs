@@ -1,4 +1,5 @@
 using System;
+using Pixelplacement;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -89,14 +90,10 @@ namespace ARPlayer.Scripts.Data
         void DefaultOnARRaycastHit(ARRaycastHit arrh)
         {
             Debug.Log($"OnARRaycastHit: {arrh.trackableId} {arrh.hitType} {arrh.pose}");
-            if (TryAttachARAnchor(arrh, out var aranchor))
-            {
-                // do something with aranchor
-            }
         }
         #endregion
         
-        #region ARAnchor
+        #region ARAnchor CRUD
         bool TryAttachARAnchor(ARRaycastHit hit, out ARAnchor anchor)
         { 
             anchor = null;
@@ -115,6 +112,80 @@ namespace ARPlayer.Scripts.Data
 
             return true;
         }
+
+        public bool RemoveAnchor(ARAnchor anchor)
+        {
+            return RemoveAnchor(anchor.sessionId);
+        }
+        
+        public bool RemoveAnchor(Guid guid)
+        {
+            if (!sharedState.anchors.TryGetValue(guid, out var anchor))
+                return false;
+            
+            Debug.Log($"RemoveAnchor {guid}");
+            
+            GameObject.Destroy(anchor.gameObject);
+            
+            sharedState.anchors.Remove(guid);
+
+            return true;
+        }
+
+        public void CleanAnchors()
+        {
+            foreach (var kvp in sharedState.anchors)
+            {
+                GameObject.Destroy(kvp.Value.gameObject);
+            }
+            
+            sharedState.anchors.Clear();
+        }
         #endregion
+        
+        public void EnterScanningScreenState()
+        {
+            Debug.Log("SharedARManager.EnterScanningScreenState");
+            
+            //Allow Scanning Vertical;
+            //Allow Vertical Place Interaction;
+            coreManager.planeDisplayManager.SetVerticalScanningAndInteraction();
+            
+            OnARRaycastHit += ScanningScreen_OnARRaycastHit;
+            sharedState.OnVerticalObjectPlaced += ScanningScreen_OnVerticalObjectPlaced;
+        }
+        
+        public void LeaveScanningScreenState()
+        {
+            Debug.Log("SharedARManager.LeaveScanningScreenState");
+            
+            //Stop Scanning Vertical;
+            //Stop Place Interaction;
+            coreManager.planeDisplayManager.StopPlaneScan();
+            coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
+            
+            OnARRaycastHit -= ScanningScreen_OnARRaycastHit;
+            sharedState.OnVerticalObjectPlaced -= ScanningScreen_OnVerticalObjectPlaced;
+        }
+
+        private void ScanningScreen_OnARRaycastHit(ARRaycastHit arRHit)
+        {
+            if (sharedState.VerticalObject != null)
+            {
+                Debug.LogWarning($"SharedARManager.ScanningScreen_OnARRaycastHit VerticalObject Assigned");
+                return;
+            }
+            
+            //Assign Anchor AS VerticalObject
+            if (TryAttachARAnchor(arRHit, out var aranchor))
+            {
+                sharedState.VerticalObject = aranchor;
+            }
+        }
+
+        private void ScanningScreen_OnVerticalObjectPlaced()
+        {
+            coreManager.myFSM.Next();
+        }
     }
 }

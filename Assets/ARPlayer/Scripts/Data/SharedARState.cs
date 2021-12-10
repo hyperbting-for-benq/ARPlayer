@@ -104,14 +104,11 @@ namespace ARPlayer.Scripts.Data
         [JsonIgnore] public GameObject VerticalObjectPrefab => coreManager.verticalPlanePrefab;
 
         public Dictionary<Guid, ARAnchor> anchors = new Dictionary<Guid, ARAnchor>();
-        public void CleanAnchors()
+
+        [ContextMenu("DebugPrint ARAnchor")]
+        private void DebugPrintArAnchors()
         {
-            foreach (var kvp in anchors)
-            {
-                GameObject.Destroy(kvp.Value.gameObject);
-            }
-            
-            anchors.Clear();
+            Debug.LogWarning($"{JsonConvert.SerializeObject(anchors)}");
         }
         #endregion
         
@@ -161,15 +158,4 @@ namespace ARPlayer.Scripts.Data
         Vertical,
         Horizontal
     }
-
-    // public enum CoreScannerState
-    // {
-    //     Unknown,
-    //     BeforeScan,
-    //     ScanningVertical,
-    //     PlacingScreen,
-    //     ModifyingScreen,
-    //     PlacingProjector,
-    //     ModifyingProjector
-    // }
 }

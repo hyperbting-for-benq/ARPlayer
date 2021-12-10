@@ -8,21 +8,6 @@ namespace ARPlayer.Scripts
 {
     public class AnchorCreator : MonoBehaviour
     {
-        //[Header("Debug purpose")]
-        // [SerializeField] private GameObject m_Prefab;
-        // public GameObject prefab
-        // {
-        //     get => m_Prefab;
-        //     set => m_Prefab = value;
-        // }
-        
-        public void RemoveAllAnchors()
-        {
-            //Logger.Log($"Removing all anchors ({m_Anchors.Count})");
-
-            CoreManager.SharedARState.CleanAnchors();
-        }
-
         // ARAnchor CreateAnchor(ARRaycastHit hit) // ARAnchor CreateAnchor(in ARRaycastHit hit)
         // {
         //     ARAnchor anchor = null;

@@ -1792,6 +1792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5a2a0358a1d4ede9e94a3e360541c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myFSM: {fileID: 3243180693412040720}
   horizontalPlanePrefab: {fileID: 5104151078574387246, guid: 0c776f8da30974673ac5f831c723ec0c, type: 3}
   verticalPlanePrefab: {fileID: 2428612308164641942, guid: f449f47954b488547857331945b74a08, type: 3}
   ARAnchorPrefab: {fileID: 6399691764261458581, guid: 90bb284262b83b545a2c05c3f39e1c89, type: 3}

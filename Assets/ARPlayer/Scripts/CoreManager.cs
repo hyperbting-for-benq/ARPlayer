@@ -1,5 +1,6 @@
 using ARPlayer.Scripts.Data;
 using ARPlayer.Scripts.Detection;
+using Pixelplacement;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR.ARFoundation;
@@ -10,6 +11,8 @@ namespace ARPlayer.Scripts
     {
         public static SharedARState SharedARState;
         public static SharedARManager SharedARManager;
+
+        public StateMachine myFSM;
         
         public GameObject horizontalPlanePrefab;
         public GameObject verticalPlanePrefab;
@@ -58,19 +61,18 @@ namespace ARPlayer.Scripts
             }
         }
 
-        // [ContextMenu("-ScanningScreenAnPlace State")]
-        // public void EnterScanningScreenState()
-        // {
-        //     Debug.Log("CoreManager.EnterScanningScreenState");
-        //     SharedARState.CoreState = CoreScannerState.PlacingScreen;
-        //     
-        //     //Allow Scanning Vertical;
-        //     //Allow Vertical Place Interaction;
-        //     planeDisplayManager.SetVerticalScanningAndInteraction();
-        //     
-        //     //SharedARManager.OnARRaycastHit += 
-        //     //SharedARState.OnVerticalObjectPlaced +=
-        // }
+        #region Debug ContextMenu
+        [ContextMenu("-ScanningScreenAnPlace State")]
+        public void EnterScanningScreenState()
+        {
+            SharedARManager.EnterScanningScreenState();
+        }
+        
+        [ContextMenu("-End ScanningScreenAnPlace State")]
+        public void LeaveScanningScreenState()
+        {
+            SharedARManager.LeaveScanningScreenState();
+        }
         
         // [ContextMenu("-ScreenPointed State")]
         // public void EnterScreenFirstPlacedState()
@@ -93,5 +95,6 @@ namespace ARPlayer.Scripts
         //     Debug.Log("CoreManager.EnterScreenPlaceModificationState");
         //     SharedARState.CoreState = CoreScannerState.ModifyingScreen;
         // }
+        #endregion
     }
 }
