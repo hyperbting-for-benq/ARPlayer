@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -50,7 +51,7 @@ public class LineDrawer : MonoBehaviour
         );
     }
 
-    #region MyRegion
+    #region Unity
     private void OnEnable()
     {
         OnLineLengthChanged += DefaultOnLineLengthChanged;
@@ -62,13 +63,20 @@ public class LineDrawer : MonoBehaviour
         OnLineLengthChanged -= DefaultOnLineLengthChanged;
         OnLineColorChanged -= DefaultOnLineColorChanged;
     }
-    #endregion
 
     private void Update()
     {
         canvas.transform.LookAt(Camera.main.transform);
     }
+    #endregion
 
+    #region ZZRuler
+    void SetYScale(float newYScale)
+    {
+        zzruler.transform.DOScaleY(newYScale, 1);
+    }
+    #endregion
+    
     public void Setup(float lenFloat, Color color)
     {
         Setup(lenFloat);
@@ -87,27 +95,31 @@ public class LineDrawer : MonoBehaviour
     
     #region Default
     [SerializeField] private LineRenderer m_LineRenderer;
+    [SerializeField] private GameObject zzruler;
     [SerializeField] private Canvas canvas;
     [SerializeField] private Text uiTxt;
     private void DefaultOnLineLengthChanged(int oldIntVal, int newIntVal)
     {
         var newFloatVal = (float)newIntVal/100;
         
-        var poss = m_LineRenderer.GetPosition(1);
-        poss.y = newFloatVal;
-        m_LineRenderer.SetPosition(1, poss);
+        // // Update LineRender 2nd point?
+        // var poss = m_LineRenderer.GetPosition(1);
+        // poss.y = newFloatVal;
+        // m_LineRenderer.SetPosition(1, poss);
+
+        var lrTra = m_LineRenderer.transform;
+        lrTra.DOScaleY(newFloatVal, 1);
+        
+        SetYScale(newFloatVal);
         
         var rt = canvas.GetComponent<RectTransform>();
-        var start = rt.position;
-        start.y = newFloatVal/2;
-        rt.position = start;
+        rt.DOLocalMoveY(newFloatVal/2, 1);
         
         uiTxt.text = newFloatVal.ToString("N2") + "m";
     }
     
     private void DefaultOnLineColorChanged(Color oldClr, Color newClr)
     {
-        
         var alpha = 1.0f;
         var gradient = new Gradient();
         gradient.SetKeys(

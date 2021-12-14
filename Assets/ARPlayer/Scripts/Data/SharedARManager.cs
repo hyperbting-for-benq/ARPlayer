@@ -209,6 +209,13 @@ namespace ARPlayer.Scripts.Data
 
         private void ScanningScreen_OnVerticalObjectPlaced()
         {
+            if (sharedState.VerticalObject != null)
+            {
+                var lDrawer = sharedState.VerticalObject.GetComponentInChildren<LineDrawer>();
+                
+                lDrawer.Setup(1.56f);
+            }
+
             coreManager.myFSM.Next();
         }
         #endregion
