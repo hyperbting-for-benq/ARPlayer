@@ -63,7 +63,12 @@ public class LineDrawer : MonoBehaviour
         OnLineColorChanged -= DefaultOnLineColorChanged;
     }
     #endregion
-    
+
+    private void Update()
+    {
+        canvas.transform.LookAt(Camera.main.transform);
+    }
+
     public void Setup(float lenFloat, Color color)
     {
         Setup(lenFloat);
