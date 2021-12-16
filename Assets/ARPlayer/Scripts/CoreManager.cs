@@ -2,6 +2,7 @@ using ARPlayer.Scripts.Data;
 using ARPlayer.Scripts.Detection;
 using Pixelplacement;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Serialization;
 using UnityEngine.XR.ARFoundation;
 
@@ -18,6 +19,8 @@ namespace ARPlayer.Scripts
         public GameObject verticalPlanePrefab;
 
         public GameObject ARAnchorPrefab;
+
+        public NotificationUser notificationUser;
         
         [Header("Object Prefab")]
         public GameObject horizontalObjectPrefab;

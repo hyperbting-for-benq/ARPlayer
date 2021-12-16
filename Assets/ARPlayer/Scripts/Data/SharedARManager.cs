@@ -158,6 +158,7 @@ namespace ARPlayer.Scripts.Data
             CleanAnchors();
         
             //TODO: Show UI to Next State
+            coreManager.notificationUser.ShowNotification("EnterBeforeScanState");
         }
 
         public void LeaveBeforeScanState()
@@ -165,33 +166,38 @@ namespace ARPlayer.Scripts.Data
             Debug.Log("SharedARManager.LeaveBeforeScanState");
             //TODO: Close UI Above
         }
-        #endregion
+        #endregion BeforeScanState
         #region ScanningScreenState
         public void EnterScanningScreenState()
         {
             Debug.Log("SharedARManager.EnterScanningScreenState");
             
-            //Allow Scanning Vertical;
-            //Allow Vertical Place Interaction;
+            //Allow Scanning Vertical; Allow Vertical Place Interaction;
             coreManager.planeDisplayManager.SetVerticalScanningAndInteraction();
             
+            // Register Callbacks
             OnARRaycastHit += ScanningScreen_OnARRaycastHit;
             sharedState.OnVerticalObjectPlaced += ScanningScreen_OnVerticalObjectPlaced;
+
+            coreManager.notificationUser.ShowNotification("EnterScanningScreenState");
         }
         
         public void LeaveScanningScreenState()
         {
             Debug.Log("SharedARManager.LeaveScanningScreenState");
             
-            //Stop Scanning Vertical;
-            //Stop Place Interaction;
+            //Stop Scanning Vertical
             coreManager.planeDisplayManager.StopPlaneScan();
+            
+            //Stop Place Interaction;
             coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
             
+            // Unregister Callbacks
             OnARRaycastHit -= ScanningScreen_OnARRaycastHit;
             sharedState.OnVerticalObjectPlaced -= ScanningScreen_OnVerticalObjectPlaced;
         }
 
+        #region ScanningScreen Callbacks
         private void ScanningScreen_OnARRaycastHit(ARRaycastHit arRHit)
         {
             if (sharedState.VerticalObject != null)
@@ -218,7 +224,8 @@ namespace ARPlayer.Scripts.Data
 
             coreManager.myFSM.Next();
         }
+        #endregion ScanningScreen Callbacks
         #endregion
-        #endregion
+        #endregion States
     }
 }
