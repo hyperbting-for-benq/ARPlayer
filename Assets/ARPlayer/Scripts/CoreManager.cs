@@ -75,7 +75,12 @@ namespace ARPlayer.Scripts
         {
             myFSM.Next();
         }
-
+        
+        public void PreviousState()
+        {
+            myFSM.Previous();
+        }
+        
         public void GoToScanningScreenState()
         {
             myFSM.ChangeState(1);
