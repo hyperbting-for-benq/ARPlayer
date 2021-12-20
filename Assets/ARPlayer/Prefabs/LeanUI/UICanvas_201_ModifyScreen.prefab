@@ -197,9 +197,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2982646462125788761, guid: d500b307d76a442f2b161db0dbb7e54f, type: 3}
+      propertyPath: interactableTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982646462125788761, guid: d500b307d76a442f2b161db0dbb7e54f, type: 3}
+      propertyPath: nonInteractableTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982646462125788761, guid: d500b307d76a442f2b161db0dbb7e54f, type: 3}
+      propertyPath: interactableTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982646462125788761, guid: d500b307d76a442f2b161db0dbb7e54f, type: 3}
+      propertyPath: nonInteractableTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 2982646462125788767, guid: d500b307d76a442f2b161db0dbb7e54f, type: 3}
       propertyPath: m_Name
       value: Tap Button (LeanButton)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2982646462125788767, guid: d500b307d76a442f2b161db0dbb7e54f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2982646462944119410, guid: d500b307d76a442f2b161db0dbb7e54f, type: 3}
       propertyPath: m_Text
