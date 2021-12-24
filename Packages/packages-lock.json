@@ -15,11 +15,11 @@
       }
     },
     "com.unity.addressables": {
-      "version": "1.19.14",
+      "version": "1.19.15",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.scriptablebuildpipeline": "1.19.4",
+        "com.unity.scriptablebuildpipeline": "1.19.5",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0",
@@ -94,7 +94,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.scriptablebuildpipeline": {
-      "version": "1.19.4",
+      "version": "1.19.5",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
