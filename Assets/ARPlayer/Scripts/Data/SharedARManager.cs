@@ -181,6 +181,7 @@ namespace ARPlayer.Scripts.Data
             //TODO: Close UI Above
         }
         #endregion BeforeScanState
+        
         #region ScanningScreenState
         public void EnterScanningScreenState()
         {
@@ -239,6 +240,76 @@ namespace ARPlayer.Scripts.Data
             coreManager.myFSM.Next();
         }
         #endregion ScanningScreen Callbacks
+        #endregion
+        
+        #region ModifyingScreenState
+        public void EnterModifyingScreenState()
+        {
+            Debug.Log("SharedARManager.EnterModifyingScreenState");
+        }
+        
+        public void LeaveModifyingScreenState()
+        {
+            Debug.Log("SharedARManager.LeaveModifyingScreenState");
+        }
+        #endregion
+        
+        #region ScanningProjectorState
+        public void EnterScanningProjectorState()
+        {
+            Debug.Log("SharedARManager.EnterScanningProjectorState");
+            
+            //Allow Scanning Vertical; Allow Vertical Place Interaction;
+            coreManager.planeDisplayManager.SetHorizontalScanningAndInteraction();
+            
+            // Register Callback
+            OnARRaycastHit += ScanningProjector_OnARRaycastHit;
+            sharedState.OnHorizontalObjectPlaced += ScanningScreen_OnHorizontalObjectPlaced;
+
+            coreManager.notificationUser.ShowNotification("EnterScanningProjectorState");
+        }
+        
+        public void LeaveScanningProjectorState()
+        {
+            Debug.Log("SharedARManager.LeaveScanningProjectorState");
+            
+            //Stop Scanning Horizontal
+            coreManager.planeDisplayManager.StopPlaneScan();
+            
+            //Stop Place Interaction;
+            coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
+            
+            // Unregister Callbacks
+            OnARRaycastHit -= ScanningProjector_OnARRaycastHit;
+            sharedState.OnHorizontalObjectPlaced -= ScanningScreen_OnHorizontalObjectPlaced;
+        }
+        
+        private void ScanningProjector_OnARRaycastHit(ARRaycastHit arRHit)
+        {
+            if (sharedState.HorizontalObject != null)
+            {
+                Debug.LogWarning($"SharedARManager.ScanningProjector_OnARRaycastHit VerticalObject Assigned");
+                return;
+            }
+            
+            //Assign Anchor AS HorizontalObject
+            if (TryAttachARAnchor(arRHit, out var aranchor))
+            {
+                sharedState.HorizontalObject = aranchor;
+            }
+        }
+        
+        private void ScanningScreen_OnHorizontalObjectPlaced()
+        {
+            if (sharedState.HorizontalObject != null)
+            {
+                var lDrawer = sharedState.HorizontalObject.GetComponentInChildren<LineDrawer>();
+                
+                lDrawer.Setup(1.56f);
+            }
+
+            coreManager.myFSM.Next();
+        }
         #endregion
         #endregion States
     }
