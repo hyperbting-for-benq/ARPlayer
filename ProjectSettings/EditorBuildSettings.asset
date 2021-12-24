@@ -20,5 +20,6 @@ EditorBuildSettings:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 4a89a903658ad4c3b8db3623a5328185, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 52690099fa7a1456896053a98d8a7df7, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: 7813a65ed35cc43a49e8f38a177d35d3, type: 2}
+    com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: 69dbcccafd3ba48f4a519f2b9a8516c9, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 18a71e16413e84edaa986fbe66a12b86, type: 2}
     xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: b386c0427ce612048a2f9dea0104f6ab, type: 2}
