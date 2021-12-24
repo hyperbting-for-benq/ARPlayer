@@ -14,15 +14,15 @@ namespace ARPlayer.Scripts
         public static SharedARManager SharedARManager;
 
         public StateMachine myFSM;
-        
-        public GameObject horizontalPlanePrefab;
-        public GameObject verticalPlanePrefab;
-
-        public GameObject ARAnchorPrefab;
 
         public NotificationUser notificationUser;
         
         [Header("Object Prefab")]
+        public GameObject horizontalPlanePrefab;
+        public GameObject verticalPlanePrefab;
+        [Space]
+        public GameObject ARAnchorPrefab;
+        [Space]
         public GameObject horizontalObjectPrefab;
         public GameObject verticalObjectPrefab;
     
