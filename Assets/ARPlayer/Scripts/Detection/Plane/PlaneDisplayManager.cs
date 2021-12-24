@@ -7,32 +7,35 @@ namespace ARPlayer.Scripts.Detection
 {
     public class PlaneDisplayManager : MonoBehaviour
     {
-        [SerializeField]private ARPlaneManager _arPlaneManager;
-
-        private void Update()
+        private ARPlaneManager arPlaneManager
         {
-            if (_arPlaneManager != null)
-                CoreManager.SharedARState.CurrentDetectionMode = _arPlaneManager.currentDetectionMode;
+            get => CoreManager.SharedARManager.MyARPlaneManager;
         }
+        
+        // private void Update()
+        // {
+        //     if (_arPlaneManager != null)
+        //         CoreManager.SharedARState.CurrentDetectionMode = _arPlaneManager.currentDetectionMode;
+        // }
 
         #region Scan
         public void StopPlaneScan()
-        {
-            _arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
-            _arPlaneManager.planePrefab = null;
+        { 
+            arPlaneManager.requestedDetectionMode = PlaneDetectionMode.None;
+            arPlaneManager.planePrefab = null;
         }
     
         public void SetHorizontalScanningAndInteraction()
         {
-            _arPlaneManager.planePrefab = CoreManager.SharedARState.HorizontalObjectPrefab;//horizontalPlanePrefab;
-            _arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Horizontal;
+            arPlaneManager.planePrefab = CoreManager.SharedARState.HorizontalObjectPrefab;//horizontalPlanePrefab;
+            arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Horizontal;
             ShowHorizontalPlaneOnly();
         }
 
         public void SetVerticalScanningAndInteraction()
         {
-            _arPlaneManager.planePrefab = CoreManager.SharedARState.VerticalObjectPrefab;
-            _arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Vertical;
+            arPlaneManager.planePrefab = CoreManager.SharedARState.VerticalObjectPrefab;
+            arPlaneManager.requestedDetectionMode = PlaneDetectionMode.Vertical;
             ShowVerticalPlaneOnly();
         }
         #endregion
@@ -60,7 +63,7 @@ namespace ARPlayer.Scripts.Detection
         #region Place Interaction
         public void EnableAllPlaneInteraction(bool enabled)
         {
-            foreach (var plane in _arPlaneManager.trackables)
+            foreach (var plane in arPlaneManager.trackables)
             {
                 plane.gameObject.SetActive(enabled);
             }
@@ -68,7 +71,7 @@ namespace ARPlayer.Scripts.Detection
         
         public void EnableVerticalPlaneInteraction()
         {
-            foreach (var plane in _arPlaneManager.trackables)
+            foreach (var plane in arPlaneManager.trackables)
             {
                 plane.gameObject.SetActive(plane.alignment == PlaneAlignment.Vertical);
             }
@@ -76,7 +79,7 @@ namespace ARPlayer.Scripts.Detection
         
         public void EnableHorizontalPlaneInteraction()
         {
-            foreach (var plane in _arPlaneManager.trackables)
+            foreach (var plane in arPlaneManager.trackables)
             {
                 var toShow = plane.alignment == PlaneAlignment.HorizontalDown || 
                              plane.alignment == PlaneAlignment.HorizontalUp;

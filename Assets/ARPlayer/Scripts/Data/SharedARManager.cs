@@ -1,5 +1,6 @@
 using System;
-using Pixelplacement;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -13,12 +14,25 @@ namespace ARPlayer.Scripts.Data
         public ARSession arsession;
 
         #region Constructor/ Destructor
+        CancellationTokenSource periodicUpdateCTS;
         public SharedARManager()
         {
+            periodicUpdateCTS = new CancellationTokenSource();
+            _ = PeriodicUpdate(periodicUpdateCTS);
         }
 
         ~SharedARManager()
         {
+            periodicUpdateCTS.Cancel();
+        }
+        
+        private async Task PeriodicUpdate(CancellationTokenSource cts)
+        {
+            while (!cts.IsCancellationRequested)
+            {
+                await Task.Delay(100);
+                sharedState.CurrentDetectionMode = MyARPlaneManager.currentDetectionMode;
+            }
         }
         #endregion
         

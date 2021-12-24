@@ -24,10 +24,11 @@ namespace ARPlayer.Scripts.Data
         [JsonIgnore] public CoreManager coreManager;
 
         #region CurrentDetectionMode
-        private PlaneDetectionMode m_CurrentDetectionMode;
-        public Action<PlaneDetectionMode> OnCurrentDetectionModeChanged = (pdm)=>{
-            Debug.Log($"SharedARState.DefaultOOnCurrentDetectionModeChanged [{pdm}]");
+        private PlaneDetectionMode m_CurrentDetectionMode = PlaneDetectionMode.None;
+        public Action<PlaneDetectionMode> OnCurrentDetectionModeChanged = (pdm) => {
+            Debug.Log($"SharedARState.DefaultOnCurrentDetectionModeChanged [{pdm}]");
         };
+        
         public PlaneDetectionMode CurrentDetectionMode
         {
             get => m_CurrentDetectionMode;
@@ -35,7 +36,7 @@ namespace ARPlayer.Scripts.Data
             {
                 if (value == m_CurrentDetectionMode)
                     return;
-
+                
                 m_CurrentDetectionMode = value;
                 OnCurrentDetectionModeChanged?.Invoke(m_CurrentDetectionMode);
             }
