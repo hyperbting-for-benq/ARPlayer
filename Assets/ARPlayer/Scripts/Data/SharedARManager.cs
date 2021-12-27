@@ -311,6 +311,27 @@ namespace ARPlayer.Scripts.Data
             coreManager.myFSM.Next();
         }
         #endregion
+        
+        #region objectsPlaced
+        public void EnterObjectsPlacedState()
+        {
+            Debug.Log("SharedARManager.EnterObjectsPlacedState");
+            
+            //Stop Scanning Horizontal
+            coreManager.planeDisplayManager.StopPlaneScan();
+            
+            //Stop Place Interaction;
+            coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
+
+            coreManager.notificationUser.ShowNotification("EnterObjectsPlacedState");
+        }
+        
+        public void LeaveObjectsPlacedState()
+        {
+            Debug.Log("SharedARManager.LeaveObjectsPlacedState");
+        }
+        #endregion objectsPlaced
+        
         #endregion States
     }
 }

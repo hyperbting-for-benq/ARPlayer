@@ -1795,10 +1795,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myFSM: {fileID: 3243180693412040720}
+  notificationUser: {fileID: 3376660386372020488}
   horizontalPlanePrefab: {fileID: 5104151078574387246, guid: 0c776f8da30974673ac5f831c723ec0c, type: 3}
   verticalPlanePrefab: {fileID: 2428612308164641942, guid: f449f47954b488547857331945b74a08, type: 3}
   ARAnchorPrefab: {fileID: 6399691764261458581, guid: 90bb284262b83b545a2c05c3f39e1c89, type: 3}
-  notificationUser: {fileID: 3376660386372020488}
   horizontalObjectPrefab: {fileID: 0}
   verticalObjectPrefab: {fileID: 0}
   m_arsessionOrigin: {fileID: 0}
@@ -1815,7 +1815,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f373a84892e1c6499f60d265e65f26b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _arPlaneManager: {fileID: 0}
 --- !u!114 &6350166652554288015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3430,6 +3429,34 @@ PrefabInstance:
     - target: {fileID: 1644371879707147121, guid: e8018c57bffa744408214ee00225f31b, type: 3}
       propertyPath: m_Name
       value: FSM
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856495738207439631, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856495738207439631, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856495738207439631, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3988633223352878287}
+    - target: {fileID: 1856495738207439631, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856495738207439631, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NextState
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856495738207439631, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ARPlayer.Scripts.CoreManager, ARPlayerTester
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856495738207439631, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4712699053129138208, guid: e8018c57bffa744408214ee00225f31b, type: 3}
       propertyPath: m_RootOrder
