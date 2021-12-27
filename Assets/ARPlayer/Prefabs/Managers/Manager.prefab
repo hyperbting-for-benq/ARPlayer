@@ -1799,8 +1799,9 @@ MonoBehaviour:
   horizontalPlanePrefab: {fileID: 5104151078574387246, guid: 0c776f8da30974673ac5f831c723ec0c, type: 3}
   verticalPlanePrefab: {fileID: 2428612308164641942, guid: f449f47954b488547857331945b74a08, type: 3}
   ARAnchorPrefab: {fileID: 6399691764261458581, guid: 90bb284262b83b545a2c05c3f39e1c89, type: 3}
-  horizontalObjectPrefab: {fileID: 0}
-  verticalObjectPrefab: {fileID: 0}
+  ceilingProjectorPrefab: {fileID: 189932115507157975, guid: 01c515e40acf34da6a0accd8b7add538, type: 3}
+  floorProjectorPrefab: {fileID: 7010015871659248354, guid: 40d59bd2c59054ad69b46c708096a4ad, type: 3}
+  wallScreenPrefab: {fileID: 8785790586688283772, guid: 66c6f2fd12fe746e1a40393e939520a1, type: 3}
   m_arsessionOrigin: {fileID: 0}
   m_arsession: {fileID: 0}
 --- !u!114 &46062905646633437

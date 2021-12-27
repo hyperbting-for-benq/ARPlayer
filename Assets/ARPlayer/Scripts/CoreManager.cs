@@ -23,8 +23,9 @@ namespace ARPlayer.Scripts
         [Space]
         public GameObject ARAnchorPrefab;
         [Space]
-        public GameObject horizontalObjectPrefab;
-        public GameObject verticalObjectPrefab;
+        public GameObject ceilingProjectorPrefab;
+        public GameObject floorProjectorPrefab;
+        public GameObject wallScreenPrefab;
     
         private void OnEnable()
         {

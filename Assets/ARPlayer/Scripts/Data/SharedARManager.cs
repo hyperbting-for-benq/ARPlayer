@@ -225,6 +225,9 @@ namespace ARPlayer.Scripts.Data
             if (TryAttachARAnchor(arRHit, out var aranchor))
             {
                 sharedState.VerticalObject = aranchor;
+                
+                // attach proper object over aranchor
+                var go = GameObject.Instantiate(coreManager.wallScreenPrefab, aranchor.transform);
             }
         }
 
@@ -296,6 +299,9 @@ namespace ARPlayer.Scripts.Data
             if (TryAttachARAnchor(arRHit, out var aranchor))
             {
                 sharedState.HorizontalObject = aranchor;
+                
+                // attach proper object over aranchor
+                var go = GameObject.Instantiate(coreManager.floorProjectorPrefab, aranchor.transform);
             }
         }
         
