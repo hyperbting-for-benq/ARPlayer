@@ -73,6 +73,9 @@ namespace ARPlayer.Scripts.Detection
 
         private IEnumerator DetectARCapability(Action arSesStateEnabled, Action arSesStateDisabled, Action unexpected)
         {
+
+            yield return new WaitForSeconds(1f);
+            
             // immediate meet correct state or unexpected
             if (ARSession.state == ARSessionState.None || ARSession.state == ARSessionState.CheckingAvailability)
             {
@@ -82,18 +85,24 @@ namespace ARPlayer.Scripts.Detection
             }
             else
             {
+                yield return new WaitForSeconds(1f);
+                
                 Debug.LogWarning("Unexpected State Occurred");
                 unexpected?.Invoke();
             }
 
             if (ARSession.state == ARSessionState.Unsupported)
             {
+                yield return new WaitForSeconds(1f);
+                
                 // Start some fallback experience for unsupported devices
                 Debug.Log("Unsupported End");
                 arSesStateDisabled?.Invoke();
             }
             else
             {
+                yield return new WaitForSeconds(1f);
+                
                 Debug.Log("Successful End");
                 arSesStateEnabled?.Invoke();
             }
