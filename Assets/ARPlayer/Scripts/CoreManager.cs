@@ -8,7 +8,7 @@ using UnityEngine.XR.ARFoundation;
 
 namespace ARPlayer.Scripts
 {
-    public class CoreManager : MonoBehaviour
+    public partial class CoreManager : MonoBehaviour
     {
         public static SharedARState SharedARState;
         public static SharedARManager SharedARManager;
@@ -41,14 +41,6 @@ namespace ARPlayer.Scripts
         {
             SharedARState = null;
         }
-    
-        #region Debug
-        [ContextMenu("Debug Print Shared States")]
-        private void DebugPrintARStates()
-        {
-            Debug.LogWarning($"{SharedARState.ToString()}");
-        }
-        #endregion
 
         [Header("Script Ref")]
         [SerializeField]private ARSessionOrigin m_arsessionOrigin;
@@ -65,8 +57,8 @@ namespace ARPlayer.Scripts
                 return m_planeDisplayManager;
             }
         }
-
-        #region Debug ContextMenu
+        
+        #region FSM Usage
         public void ResetState()
         {
             myFSM.ChangeState(myFSM.defaultState); 
@@ -86,46 +78,6 @@ namespace ARPlayer.Scripts
         {
             myFSM.ChangeState(1);
         }
-
-        [ContextMenu("-BeforeScan State")]
-        public void EnterBeforeScanState()
-        {
-            SharedARManager.EnterBeforeScanState();
-        }
-        
-        [ContextMenu("-ScanningScreenAnPlace State")]
-        public void EnterScanningScreenState()
-        {
-            SharedARManager.EnterScanningScreenState();
-        }
-        
-        [ContextMenu("-End ScanningScreenAnPlace State")]
-        public void LeaveScanningScreenState()
-        {
-            SharedARManager.LeaveScanningScreenState();
-        }
-        
-        // [ContextMenu("-ScreenPointed State")]
-        // public void EnterScreenFirstPlacedState()
-        // {
-        //     Debug.Log("CoreManager.EnterScreenFirstPlacedState");
-        //     SharedARState.CoreState = CoreScannerState.ModifyingScreen;
-        //     
-        //     //Stop scanning; Disable AllPlaneInteraction
-        //     planeDisplayManager.StopPlaneScan();
-        //     planeDisplayManager.EnableAllPlaneInteraction(false);
-        //     
-        //     //Allow/Show ScreenObjectMoveAround UI
-        //     
-        // }
-        
-        // [ContextMenu("-ScreenRelocation State")]
-        // public void EnterScreenPlaceModificationState()
-        // {
-        //     
-        //     Debug.Log("CoreManager.EnterScreenPlaceModificationState");
-        //     SharedARState.CoreState = CoreScannerState.ModifyingScreen;
-        // }
         #endregion
     }
 }
