@@ -1,48 +1,101 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MyBox;
+using Pixelplacement;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
 namespace ARPlayer.Scripts.Detection
 {
-    public class ARCababilityDetection : MonoBehaviour
+    public class ARCapabilityDetection : MonoBehaviour
     {
-        //[SerializeField] private GameObject arSession;
-        // Start is called before the first frame update
-        void Start()
+        [SerializeField] private StateMachine stateMachine;
+        [Space] 
+        //[SerializeField] private GameObject CheckerLoaded;
+        [SerializeField] private GameObject CapabilityDisabled;
+        [SerializeField] private GameObject CapabilityEnabled;
+        [SerializeField] private GameObject EmptyState;
+
+        [Space] 
+        [SerializeField][ReadOnly] private MainManager _mainManager; 
+        private void OnEnable()
         {
-            StartCoroutine(DetectARCabability(
-                () => { TestPlaneDetection(); },
-                () => { }
-            ));
+            _mainManager = FindObjectOfType<MainManager>();
         }
-    
-        IEnumerator DetectARCabability(Action success, Action fail)
+
+        private void OnDisable()
         {
-            switch (ARSession.state)
+            _mainManager = null;
+        }
+
+        private void Start()
+        {
+            StartCoroutine(DetectARCapability(
+                    () =>
+                    {
+                        if (CheckPlaneDetectionCapability())
+                        {
+                            stateMachine.ChangeState(CapabilityEnabled);
+                        }
+                        else
+                        {
+                            Debug.LogError("Cannot DetectPlane!");
+                            stateMachine.ChangeState(CapabilityDisabled);
+                        }
+                    },
+                    () =>
+                    {
+                        stateMachine.ChangeState(CapabilityDisabled);
+                    },
+                () =>
+                    {
+                        Debug.LogError("Unexpected State Detected!");
+                        stateMachine.ChangeState(CapabilityDisabled);
+                    }
+                ) 
+            );
+        }
+
+        public void GoToARMain()
+        {
+            stateMachine.ChangeState(EmptyState);
+            
+            if (_mainManager == null)
             {
-                case ARSessionState.None:
-                case ARSessionState.CheckingAvailability:
-                    Debug.Log("CheckAvailability");
-                    yield return ARSession.CheckAvailability();
-                    break;
-                default:
-                    Debug.LogWarning("Unexpected States");
-                    break;
+                Debug.LogError("MainManager Missing!");
+                return;
             }
-        
-            if (ARSession.state == ARSessionState.Unsupported)
+
+            _mainManager.LoadScene_ARMain();
+        }
+
+        private IEnumerator DetectARCapability(Action arSesStateEnabled, Action arSesStateDisabled, Action unexpected)
+        {
+            // immediate meet correct state or unexpected
+            if (ARSession.state == ARSessionState.None || ARSession.state == ARSessionState.CheckingAvailability)
             {
-                // Start some fallback experience for unsupported devices
-                Debug.Log("Unsupported");
-                fail?.Invoke();
+                Debug.Log("CheckingAvailability");
+
+                yield return ARSession.CheckAvailability();
             }
             else
             {
-                Debug.Log("End");
-                success?.Invoke();
+                Debug.LogWarning("Unexpected State Occurred");
+                unexpected?.Invoke();
+            }
+
+            if (ARSession.state == ARSessionState.Unsupported)
+            {
+                // Start some fallback experience for unsupported devices
+                Debug.Log("Unsupported End");
+                arSesStateDisabled?.Invoke();
+            }
+            else
+            {
+                Debug.Log("Successful End");
+                arSesStateEnabled?.Invoke();
             }
         }
     
@@ -67,23 +120,25 @@ namespace ARPlayer.Scripts.Detection
         // }
         // #endregion
 
-        void TestPlaneDetection()
+        private bool CheckPlaneDetectionCapability()
         {
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors(planeDescriptors);
-        
-            if(planeDescriptors.Count > 0)
+
+            if (planeDescriptors.Count <= 0) 
+                return false;
+            
+            Debug.Log("PlaneDetection Supported");
+            foreach(var planeDescriptor in planeDescriptors)
             {
-                Debug.Log("PlaneDetection Supported");
-                foreach(var planeDescriptor in planeDescriptors)
-                {
-                    if(planeDescriptor.supportsClassification)
-                    {
-                        Debug.Log("Plane Classification Supported");
-                        break;
-                    }
-                }
+                if (!planeDescriptor.supportsClassification) 
+                    continue;
+                
+                Debug.Log("Plane Classification Supported");
+                break;
             }
+
+            return true;
         }
 
         void test()

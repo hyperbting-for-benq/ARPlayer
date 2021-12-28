@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 8336160341101452647}
   - component: {fileID: 113716703633125499}
   m_Layer: 0
-  m_Name: FSM
+  m_Name: ARMainFSM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

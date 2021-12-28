@@ -73,11 +73,6 @@ namespace ARPlayer.Scripts
         {
             myFSM.Previous();
         }
-        
-        public void GoToScanningScreenState()
-        {
-            myFSM.ChangeState(1);
-        }
         #endregion
     }
 }

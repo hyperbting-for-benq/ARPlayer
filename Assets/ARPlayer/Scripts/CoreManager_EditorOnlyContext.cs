@@ -10,20 +10,20 @@ namespace ARPlayer.Scripts
         [ContextMenu("-BeforeScan State")]
         public void EnterBeforeScanState()
         {
-            SharedARManager.EnterBeforeScanState();
+            ResetState(); //SharedARManager.EnterBeforeScanState();
         }
 
-        [ContextMenu("-ScanningScreenAnPlace State")]
-        public void EnterScanningScreenState()
-        {
-            SharedARManager.EnterScanningScreenState();
-        }
-
-        [ContextMenu("-End ScanningScreenAnPlace State")]
-        public void LeaveScanningScreenState()
-        {
-            SharedARManager.LeaveScanningScreenState();
-        }
+        // [ContextMenu("-ScanningScreenAnPlace State")]
+        // public void EnterScanningScreenState()
+        // {
+        //     SharedARManager.EnterScanningScreenState();
+        // }
+        
+        // [ContextMenu("-End ScanningScreenAnPlace State")]
+        // public void LeaveScanningScreenState()
+        // {
+        //     SharedARManager.LeaveScanningScreenState();
+        // }
 
         // [ContextMenu("-ScreenPointed State")]
         // public void EnterScreenFirstPlacedState()
@@ -51,6 +51,13 @@ namespace ARPlayer.Scripts
         private void DebugPrintARStates()
         {
             Debug.LogWarning($"{SharedARState.ToString()}");
+        }
+        #endregion
+
+        #region Debug Force ChangeState
+        public void DebugForceGoToScanningScreenState()
+        {
+            myFSM.ChangeState(1);
         }
         #endregion
     }
