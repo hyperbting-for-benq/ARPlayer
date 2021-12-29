@@ -340,7 +340,7 @@ namespace ARPlayer.Scripts.Data
                     araw.PlaceObject(ARAnchorWorker.ObjectOrientation.HorizontalBottom, go.transform);
                     break;
                 default:
-                    Debug.LogWarning($"ScanningProjector_OnARRaycastHit Unexpected PlaneAlignment {plane.alignment}");
+                    Debug.LogWarning($"ScanningProjector_OnARRaycastHit Unexpected PlaneAlignment:{plane.alignment}");
                     break;
             }
         }
