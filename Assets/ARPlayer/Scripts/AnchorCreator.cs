@@ -43,6 +43,12 @@ namespace ARPlayer.Scripts
         //     return anchor;
         // }
 
+
+        // Raycast against planes and feature points
+        const TrackableType trackableTypes =
+            TrackableType.FeaturePoint |
+            TrackableType.PlaneWithinPolygon;
+        
         void Update()
         {
             if (Input.touchCount == 0)
@@ -51,11 +57,6 @@ namespace ARPlayer.Scripts
             var touch = Input.GetTouch(0);
             if (touch.phase != TouchPhase.Began)
                 return;
-
-            // Raycast against planes and feature points
-            const TrackableType trackableTypes =
-                TrackableType.FeaturePoint |
-                TrackableType.PlaneWithinPolygon;
 
             // Perform the raycast
             if (!CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, trackableTypes))
@@ -69,6 +70,9 @@ namespace ARPlayer.Scripts
                 return;
 
             // Create a new anchor
+            if (CoreManager.SharedARManager == null)
+                return;
+            
             CoreManager.SharedARManager.OnARRaycastHit(hit);
         }
 
