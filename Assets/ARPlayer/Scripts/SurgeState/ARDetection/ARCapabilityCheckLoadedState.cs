@@ -9,18 +9,22 @@ namespace ARPlayer.Scripts.SurgeState.ARDetection
     {
         [SerializeField] private Text txt;
     
-        //[SerializeField] private Twee
+        [SerializeField] private Sequence txtTweenerSeq;
         private void OnEnable()
         {
             var targetTxt = txt.text;
-            txt.text = "";
-        
-            txt.DOText(targetTxt, 1f, true, ScrambleMode.None);
+
+            txtTweenerSeq = DOTween.Sequence();
+            txtTweenerSeq.Append(txt.DOText("", 0f, false, ScrambleMode.None));
+            txtTweenerSeq.Append(txt.DOText(targetTxt, 0.5f, true, ScrambleMode.None));
+            
+            txtTweenerSeq.SetLoops(-1, LoopType.Yoyo);
+            txtTweenerSeq.Play();
         }
 
         private void OnDisable()
         {
-        
+            txtTweenerSeq?.Kill();
         }
     }
 }

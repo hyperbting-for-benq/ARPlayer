@@ -227,11 +227,9 @@ namespace ARPlayer.Scripts.Data
                 sharedState.VerticalObject = aranchor;
                 
                 // attach proper object over aranchor
-                var go = GameObject.Instantiate<GameObject>(coreManager.wallScreenPrefab, 
-                    Vector3.zero, Quaternion.Euler(90,0,0),
-                    aranchor.transform);
+                var go = GameObject.Instantiate<GameObject>(coreManager.wallScreenPrefab, aranchor.transform);
                 
-                // rescale
+                go.transform.localRotation = Quaternion.Euler(90,0,0);
                 go.transform.localScale = Vector3.one * 0.5f;
             }
         }
