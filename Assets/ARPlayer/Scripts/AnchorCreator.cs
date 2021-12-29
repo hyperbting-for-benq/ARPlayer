@@ -8,6 +8,17 @@ namespace ARPlayer.Scripts
 {
     public class AnchorCreator : MonoBehaviour
     {
+        [SerializeField] [MyBox.ReadOnly] private CoreManager _coreManager;
+        private void OnEnable()
+        {
+            _coreManager = GetComponent<CoreManager>();
+        }
+
+        private void OnDisable()
+        {
+            _coreManager = null;
+        }
+
         // ARAnchor CreateAnchor(ARRaycastHit hit) // ARAnchor CreateAnchor(in ARRaycastHit hit)
         // {
         //     ARAnchor anchor = null;
@@ -43,7 +54,11 @@ namespace ARPlayer.Scripts
         //     return anchor;
         // }
 
-        void Update()
+
+        // Raycast against planes and feature points
+        const TrackableType FilteredTrackableTypes = TrackableType.FeaturePoint | TrackableType.PlaneWithinPolygon;
+        
+        private void Update()
         {
             if (Input.touchCount == 0)
                 return;
@@ -52,20 +67,16 @@ namespace ARPlayer.Scripts
             if (touch.phase != TouchPhase.Began)
                 return;
 
-            // Raycast against planes and feature points
-            const TrackableType trackableTypes =
-                TrackableType.FeaturePoint |
-                TrackableType.PlaneWithinPolygon;
-
-            // Perform the raycast
-            if (!CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, trackableTypes))
-            {
+            if (_coreManager==null || CoreManager.SharedARManager == null)
                 return;
-            }
+            
+            // Perform the raycast
+            if (!CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, FilteredTrackableTypes))
+                return;
             
             // Raycast hits are sorted by distance, so the first one will be the closest hit.
             var hit = s_Hits[0];
-            if (!hit.trackable.gameObject.activeSelf)
+            if (hit.trackable == null || hit.trackable.gameObject == null || !hit.trackable.gameObject.activeSelf)
                 return;
 
             // Create a new anchor
