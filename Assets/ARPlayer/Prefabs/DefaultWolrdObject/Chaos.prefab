@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DefaultScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 8785790586688283772, guid: 66c6f2fd12fe746e1a40393e939520a1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66c6f2fd12fe746e1a40393e939520a1, type: 3}
 --- !u!4 &1474042134712510518 stripped
