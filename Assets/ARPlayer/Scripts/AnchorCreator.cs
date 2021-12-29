@@ -56,11 +56,9 @@ namespace ARPlayer.Scripts
 
 
         // Raycast against planes and feature points
-        const TrackableType trackableTypes =
-            TrackableType.FeaturePoint |
-            TrackableType.PlaneWithinPolygon;
+        const TrackableType FilteredTrackableTypes = TrackableType.FeaturePoint | TrackableType.PlaneWithinPolygon;
         
-        void Update()
+        private void Update()
         {
             if (Input.touchCount == 0)
                 return;
@@ -69,22 +67,24 @@ namespace ARPlayer.Scripts
             if (touch.phase != TouchPhase.Began)
                 return;
 
-            if (CoreManager.SharedARManager == null)
+            if (_coreManager==null || CoreManager.SharedARManager == null)
                 return;
             
             // Perform the raycast
-            if (!CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, trackableTypes))
+            if (CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, FilteredTrackableTypes))
             {
-                return;
-            }
-            
-            // Raycast hits are sorted by distance, so the first one will be the closest hit.
-            var hit = s_Hits[0];
-            if (!hit.trackable.gameObject.activeSelf)
-                return;
+                Debug.LogWarning("hit sth");
 
-            // Create a new anchor
-            CoreManager.SharedARManager.OnARRaycastHit(hit);
+                // Raycast hits are sorted by distance, so the first one will be the closest hit.
+                var hit = s_Hits[0];
+                if (hit.trackable == null || hit.trackable.gameObject == null || !hit.trackable.gameObject.activeSelf)
+                    return;
+
+                Debug.LogWarning("valid hit");
+
+                // Create a new anchor
+                CoreManager.SharedARManager.OnARRaycastHit(hit);
+            }
         }
 
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();

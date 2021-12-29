@@ -40,6 +40,7 @@ namespace ARPlayer.Scripts
         private void OnDisable()
         {
             SharedARState = null;
+            SharedARManager = null;
         }
 
         [Header("Script Ref")]
