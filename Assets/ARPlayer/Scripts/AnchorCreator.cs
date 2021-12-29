@@ -8,6 +8,17 @@ namespace ARPlayer.Scripts
 {
     public class AnchorCreator : MonoBehaviour
     {
+        [SerializeField] [MyBox.ReadOnly] private CoreManager _coreManager;
+        private void OnEnable()
+        {
+            _coreManager = GetComponent<CoreManager>();
+        }
+
+        private void OnDisable()
+        {
+            _coreManager = null;
+        }
+
         // ARAnchor CreateAnchor(ARRaycastHit hit) // ARAnchor CreateAnchor(in ARRaycastHit hit)
         // {
         //     ARAnchor anchor = null;
@@ -58,6 +69,9 @@ namespace ARPlayer.Scripts
             if (touch.phase != TouchPhase.Began)
                 return;
 
+            if (CoreManager.SharedARManager == null)
+                return;
+            
             // Perform the raycast
             if (!CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, trackableTypes))
             {
@@ -70,9 +84,6 @@ namespace ARPlayer.Scripts
                 return;
 
             // Create a new anchor
-            if (CoreManager.SharedARManager == null)
-                return;
-            
             CoreManager.SharedARManager.OnARRaycastHit(hit);
         }
 
