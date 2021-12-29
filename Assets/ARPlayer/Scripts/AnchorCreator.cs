@@ -71,20 +71,16 @@ namespace ARPlayer.Scripts
                 return;
             
             // Perform the raycast
-            if (CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, FilteredTrackableTypes))
-            {
-                Debug.LogWarning("hit sth");
+            if (!CoreManager.SharedARManager.MyARRaycastManager.Raycast(touch.position, s_Hits, FilteredTrackableTypes))
+                return;
+            
+            // Raycast hits are sorted by distance, so the first one will be the closest hit.
+            var hit = s_Hits[0];
+            if (hit.trackable == null || hit.trackable.gameObject == null || !hit.trackable.gameObject.activeSelf)
+                return;
 
-                // Raycast hits are sorted by distance, so the first one will be the closest hit.
-                var hit = s_Hits[0];
-                if (hit.trackable == null || hit.trackable.gameObject == null || !hit.trackable.gameObject.activeSelf)
-                    return;
-
-                Debug.LogWarning("valid hit");
-
-                // Create a new anchor
-                CoreManager.SharedARManager.OnARRaycastHit(hit);
-            }
+            // Create a new anchor
+            CoreManager.SharedARManager.OnARRaycastHit(hit);
         }
 
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
