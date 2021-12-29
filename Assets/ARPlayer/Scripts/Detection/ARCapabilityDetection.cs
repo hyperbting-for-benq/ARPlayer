@@ -11,11 +11,12 @@ namespace ARPlayer.Scripts.Detection
 {
     public class ARCapabilityDetection : MonoBehaviour
     {
-        [SerializeField] private StateMachine stateMachine;
+        [SerializeField] [MyBox.ReadOnly] private StateMachine stateMachine;
         [Space] 
         //[SerializeField] private GameObject CheckerLoaded;
         [SerializeField] private GameObject CapabilityDisabled;
         [SerializeField] private GameObject CapabilityEnabled;
+        [SerializeField] private GameObject CameraPermissionCheck;
         [SerializeField] private GameObject EmptyState;
 
         [Space] 
@@ -23,6 +24,7 @@ namespace ARPlayer.Scripts.Detection
         private void OnEnable()
         {
             _mainManager = FindObjectOfType<MainManager>();
+            stateMachine = GetComponent<StateMachine>();
         }
 
         private void OnDisable()
@@ -58,6 +60,11 @@ namespace ARPlayer.Scripts.Detection
             );
         }
 
+        public void GoToCameraCheck()
+        {
+            stateMachine.ChangeState(CameraPermissionCheck);
+        }
+        
         public void GoToARMain()
         {
             stateMachine.ChangeState(EmptyState);
@@ -191,5 +198,57 @@ namespace ARPlayer.Scripts.Detection
             // var bodyTrackingDescriptors = new List<XRHumanBodySubsystemDescriptor>();
             // SubsystemManager.GetSubsystemDescriptors(bodyTrackingDescriptors);
         }
+        
+        #region Camera Permission
+        public bool HaveCameraPermission
+        {
+            get
+            {
+                #if UNITY_ANDROID
+                return UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera);
+                #else
+                return Application.HasUserAuthorization(UserAuthorization.WebCam);
+                #endif
+            }
+        }
+        
+        public IEnumerator RequestCameraPermission(Action success, Action fail)
+        {
+            yield return new WaitForSeconds(1f);
+            
+            if (!HaveCameraPermission)
+            {
+                yield return new WaitForSeconds(2f);
+                
+                
+                #if UNITY_ANDROID
+                UnityEngine.Android.Permission.RequestUserPermission(UnityEngine.Android.Permission.Camera);
+                #else
+                yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+                #endif
+            }
+
+            if (HaveCameraPermission)
+            {
+                Debug.Log("Camera Permission Authorized!");
+                ListWebCams();
+                
+                success?.Invoke();
+            }
+            else
+            {
+                //TODO:
+                fail?.Invoke();
+            }
+        }
+        
+        private void ListWebCams()
+        {
+            foreach (var device in WebCamTexture.devices)
+            {
+                Debug.Log("Name: " + device.name);
+            }
+        }
+        #endregion
     }
 }

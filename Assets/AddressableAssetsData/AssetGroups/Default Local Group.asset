@@ -33,6 +33,18 @@ MonoBehaviour:
     m_Address: Prefabs/ARDefaultVerticalPlane
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 66c6f2fd12fe746e1a40393e939520a1
+    m_Address: DefaultScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 01c515e40acf34da6a0accd8b7add538
+    m_Address: DefaultCeilingProjector
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 40d59bd2c59054ad69b46c708096a4ad
+    m_Address: DefaultFloorProjetor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: cbb79f8cb9b69406992ce7cfba315a20, type: 2}
   m_SchemaSet:

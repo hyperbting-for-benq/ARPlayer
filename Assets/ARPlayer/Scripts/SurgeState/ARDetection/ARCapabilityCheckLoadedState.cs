@@ -16,8 +16,9 @@ namespace ARPlayer.Scripts.SurgeState.ARDetection
 
             txtTweenerSeq = DOTween.Sequence();
             txtTweenerSeq.Append(txt.DOText("", 0f, false, ScrambleMode.None));
-            txtTweenerSeq.Append(txt.DOText(targetTxt, 0.5f, true, ScrambleMode.None));
-            
+            txtTweenerSeq.Append(txt.DOText(targetTxt, 0.35f, true, ScrambleMode.None));
+            txtTweenerSeq.AppendInterval(0.15f);
+                
             txtTweenerSeq.SetLoops(-1, LoopType.Yoyo);
             txtTweenerSeq.Play();
         }

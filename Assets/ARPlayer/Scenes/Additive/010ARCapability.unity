@@ -123,54 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &107132798
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 107132799}
-  - component: {fileID: 107132800}
-  m_Layer: 0
-  m_Name: AR Capability Detection
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &107132799
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107132798}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &107132800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107132798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1961e1658370431db78b6acdb31818e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateMachine: {fileID: 278214569}
-  CapabilityDisabled: {fileID: 278214573}
-  CapabilityEnabled: {fileID: 278214572}
-  EmptyState: {fileID: 278214571}
-  _mainManager: {fileID: 0}
 --- !u!1001 &278214568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -178,37 +130,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1160984545865261508, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onOff.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1160984545865261508, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1160984545865261508, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 107132800}
-    - target: {fileID: 1160984545865261508, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1160984545865261508, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GoToARMain
-      objectReference: {fileID: 0}
-    - target: {fileID: 1160984545865261508, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ARPlayer.Scripts.Detection.ARCapabilityDetection, ARPlayerTester
-      objectReference: {fileID: 0}
-    - target: {fileID: 1160984545865261508, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onOff.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1772015574582145624, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1772015574582145624, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -254,43 +178,49 @@ PrefabInstance:
       propertyPath: m_Name
       value: ARCheckFSM
       objectReference: {fileID: 0}
-    - target: {fileID: 9098764219163208982, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 107132800}
-    - target: {fileID: 9098764219163208982, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: GoToARMain
-      objectReference: {fileID: 0}
-    - target: {fileID: 9098764219163208982, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ARPlayer.Scripts.Detection.ARCapabilityDetection, ARPlayerTester
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
---- !u!114 &278214569 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1772015574582145626, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-  m_PrefabInstance: {fileID: 278214568}
+--- !u!1 &524132011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 524132013}
+  - component: {fileID: 524132012}
+  m_Layer: 0
+  m_Name: LeanTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &524132012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524132011}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0b24e2f2ad54cc09940c320ed3cf4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 217c8e972fc1ae74abf64e3200253b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &278214571 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1772015575291203803, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-  m_PrefabInstance: {fileID: 278214568}
+  defaultTiming: -1
+--- !u!4 &524132013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &278214572 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1772015574030220400, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-  m_PrefabInstance: {fileID: 278214568}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &278214573 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1772015575101068311, guid: ffa74414e57d96c4ab91f8aa050b32b5, type: 3}
-  m_PrefabInstance: {fileID: 278214568}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524132011}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

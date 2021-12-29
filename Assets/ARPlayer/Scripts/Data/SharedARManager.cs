@@ -47,8 +47,8 @@ namespace ARPlayer.Scripts.Data
         {
             if (!sharedState.IsHorizontalObjectSet())
                 return;
-
-            GameObject.Destroy(sharedState.HorizontalObject);
+            
+            RemoveAnchor(sharedState.HorizontalObject);
         }
         
         public void TryRemoveScreen()
@@ -56,7 +56,7 @@ namespace ARPlayer.Scripts.Data
             if (!sharedState.IsVerticalObjectSet())
                 return;
 
-            GameObject.Destroy(sharedState.VerticalObject);
+            RemoveAnchor(sharedState.VerticalObject);
         }
         #endregion
         
@@ -127,7 +127,7 @@ namespace ARPlayer.Scripts.Data
 
         public bool RemoveAnchor(ARAnchor anchor)
         {
-            return RemoveAnchor(anchor.sessionId);
+            return anchor != null && RemoveAnchor(anchor.sessionId);
         }
         
         public bool RemoveAnchor(Guid guid)
@@ -253,8 +253,8 @@ namespace ARPlayer.Scripts.Data
         {
             if (sharedState.VerticalObject == null)
                 return;
-            
-            GameObject.Destroy(sharedState.VerticalObject.gameObject);
+
+            RemoveAnchor(sharedState.VerticalObject); //GameObject.Destroy(sharedState.VerticalObject.gameObject);
             sharedState.VerticalObject = null;
         }
         #endregion ScanningScreen Callbacks
@@ -361,7 +361,7 @@ namespace ARPlayer.Scripts.Data
             if (sharedState.HorizontalObject == null)
                 return;
             
-            GameObject.Destroy(sharedState.HorizontalObject.gameObject);
+            RemoveAnchor(sharedState.HorizontalObject); //GameObject.Destroy(sharedState.HorizontalObject.gameObject);
             sharedState.HorizontalObject = null;
         }
         #endregion

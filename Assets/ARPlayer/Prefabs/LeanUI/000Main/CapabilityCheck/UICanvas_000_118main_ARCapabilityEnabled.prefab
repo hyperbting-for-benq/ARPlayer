@@ -93,7 +93,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2494975079009025205, guid: d127bb607c734499ba31166848a8697b, type: 3}
       propertyPath: m_Name
-      value: UICanvas_000_119main_ARCapabilityEnabled
+      value: UICanvas_000_118main_ARCapabilityEnabled
       objectReference: {fileID: 0}
     - target: {fileID: 7329653451923265893, guid: d127bb607c734499ba31166848a8697b, type: 3}
       propertyPath: m_IsActive
@@ -272,15 +272,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8674924176673683515, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674924176673683515, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: expectedInteractable
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: interactableTransitions.entries.Array.size
@@ -292,7 +292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8674924177581757989, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_Name
-      value: Modal (LeanWindow)
+      value: ARCap Modal (LeanWindow)
       objectReference: {fileID: 0}
     - target: {fileID: 8674924177581757990, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_Pivot.x
@@ -380,19 +380,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8674924177581757991, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: on
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674924177581758008, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674924177581758008, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_Interactable
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8674924177581758008, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_BlocksRaycasts
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
