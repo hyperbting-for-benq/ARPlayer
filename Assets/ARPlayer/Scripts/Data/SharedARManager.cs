@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 namespace ARPlayer.Scripts.Data
 {
@@ -186,6 +187,7 @@ namespace ARPlayer.Scripts.Data
         public void EnterScanningScreenState()
         {
             Debug.Log("SharedARManager.EnterScanningScreenState");
+            ScanningScreen_Reset();
             
             //Allow Scanning Vertical; Allow Vertical Place Interaction;
             coreManager.planeDisplayManager.SetVerticalScanningAndInteraction();
@@ -222,16 +224,17 @@ namespace ARPlayer.Scripts.Data
             }
             
             //Assign Anchor AS VerticalObject
-            if (TryAttachARAnchor(arRHit, out var aranchor))
-            {
-                sharedState.VerticalObject = aranchor;
-                
-                // attach proper object over aranchor
-                var go = GameObject.Instantiate<GameObject>(coreManager.wallScreenPrefab, aranchor.transform);
-                
-                go.transform.localRotation = Quaternion.Euler(90,0,0);
-                go.transform.localScale = Vector3.one * 0.5f;
-            }
+            if (!TryAttachARAnchor(arRHit, out var aranchor))
+                return;
+            
+            sharedState.VerticalObject = aranchor;
+            
+            // attach proper object over aranchor
+            var go = GameObject.Instantiate<GameObject>(coreManager.wallScreenPrefab);
+
+            var araw = aranchor.GetComponent<ARAnchorWorker>();
+            if(araw != null)
+                araw.PlaceObject(ARAnchorWorker.ObjectOrientation.Vertical, go.transform);
         }
 
         private void ScanningScreen_OnVerticalObjectPlaced()
@@ -244,6 +247,15 @@ namespace ARPlayer.Scripts.Data
             }
 
             coreManager.myFSM.Next();
+        }
+
+        private void ScanningScreen_Reset()
+        {
+            if (sharedState.VerticalObject == null)
+                return;
+            
+            GameObject.Destroy(sharedState.VerticalObject.gameObject);
+            sharedState.VerticalObject = null;
         }
         #endregion ScanningScreen Callbacks
         #endregion
@@ -264,13 +276,14 @@ namespace ARPlayer.Scripts.Data
         public void EnterScanningProjectorState()
         {
             Debug.Log("SharedARManager.EnterScanningProjectorState");
+            ScanningProjector_Reset();
             
             //Allow Scanning Vertical; Allow Vertical Place Interaction;
             coreManager.planeDisplayManager.SetHorizontalScanningAndInteraction();
             
             // Register Callback
             OnARRaycastHit += ScanningProjector_OnARRaycastHit;
-            sharedState.OnHorizontalObjectPlaced += ScanningScreen_OnHorizontalObjectPlaced;
+            sharedState.OnHorizontalObjectPlaced += ScanningProjector_OnHorizontalObjectPlaced;
 
             coreManager.notificationUser.ShowNotification("EnterScanningProjectorState");
         }
@@ -287,7 +300,7 @@ namespace ARPlayer.Scripts.Data
             
             // Unregister Callbacks
             OnARRaycastHit -= ScanningProjector_OnARRaycastHit;
-            sharedState.OnHorizontalObjectPlaced -= ScanningScreen_OnHorizontalObjectPlaced;
+            sharedState.OnHorizontalObjectPlaced -= ScanningProjector_OnHorizontalObjectPlaced;
         }
         
         private void ScanningProjector_OnARRaycastHit(ARRaycastHit arRHit)
@@ -297,18 +310,42 @@ namespace ARPlayer.Scripts.Data
                 Debug.LogWarning($"SharedARManager.ScanningProjector_OnARRaycastHit VerticalObject Assigned");
                 return;
             }
+
+            if (!TryAttachARAnchor(arRHit, out var aranchor))
+                return;
             
-            //Assign Anchor AS HorizontalObject
-            if (TryAttachARAnchor(arRHit, out var aranchor))
+            if (!(arRHit.trackable is ARPlane plane))
             {
-                sharedState.HorizontalObject = aranchor;
-                
-                // attach proper object over aranchor
-                var go = GameObject.Instantiate(coreManager.floorProjectorPrefab, aranchor.transform);
+                Debug.LogWarning($"ScanningProjector_OnARRaycastHit {arRHit.trackable} Not ARPlane");
+                return;
+            }
+            
+            var araw = aranchor.GetComponent<ARAnchorWorker>();
+            if (araw == null)
+            {
+                Debug.LogWarning("ScanningProjector_OnARRaycastHit ARAnchorWorker_NotFound");
+                return;
+            }
+
+            sharedState.HorizontalObject = aranchor;
+            GameObject go;
+            switch (plane.alignment)
+            {
+                case PlaneAlignment.HorizontalDown:
+                    go = GameObject.Instantiate(coreManager.ceilingProjectorPrefab);
+                    araw.PlaceObject(ARAnchorWorker.ObjectOrientation.HorizontalTop, go.transform);
+                    break;
+                case PlaneAlignment.HorizontalUp:
+                    go = GameObject.Instantiate(coreManager.floorProjectorPrefab);
+                    araw.PlaceObject(ARAnchorWorker.ObjectOrientation.HorizontalBottom, go.transform);
+                    break;
+                default:
+                    Debug.LogWarning($"ScanningProjector_OnARRaycastHit Unexpected PlaneAlignment {plane.alignment}");
+                    break;
             }
         }
         
-        private void ScanningScreen_OnHorizontalObjectPlaced()
+        private void ScanningProjector_OnHorizontalObjectPlaced()
         {
             if (sharedState.HorizontalObject != null)
             {
@@ -318,6 +355,14 @@ namespace ARPlayer.Scripts.Data
             }
 
             coreManager.myFSM.Next();
+        }
+        private void ScanningProjector_Reset()
+        {
+            if (sharedState.HorizontalObject == null)
+                return;
+            
+            GameObject.Destroy(sharedState.HorizontalObject.gameObject);
+            sharedState.HorizontalObject = null;
         }
         #endregion
         
@@ -340,7 +385,6 @@ namespace ARPlayer.Scripts.Data
             Debug.Log("SharedARManager.LeaveObjectsPlacedState");
         }
         #endregion objectsPlaced
-        
         #endregion States
     }
 }

@@ -3459,6 +3459,34 @@ PrefabInstance:
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2817893756934148212, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817893756934148212, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817893756934148212, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3988633223352878287}
+    - target: {fileID: 2817893756934148212, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817893756934148212, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PreviousState
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817893756934148212, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ARPlayer.Scripts.CoreManager, ARPlayerTester
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817893756934148212, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4712699053129138208, guid: e8018c57bffa744408214ee00225f31b, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -3544,6 +3572,34 @@ PrefabInstance:
       value: ARPlayer.Scripts.CoreManager, ARPlayerTester
       objectReference: {fileID: 0}
     - target: {fileID: 8037607240947469896, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481393485617590430, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481393485617590430, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481393485617590430, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3988633223352878287}
+    - target: {fileID: 8481393485617590430, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481393485617590430, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PreviousState
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481393485617590430, guid: e8018c57bffa744408214ee00225f31b, type: 3}
+      propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ARPlayer.Scripts.CoreManager, ARPlayerTester
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481393485617590430, guid: e8018c57bffa744408214ee00225f31b, type: 3}
       propertyPath: onClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}

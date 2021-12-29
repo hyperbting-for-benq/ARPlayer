@@ -67,35 +67,9 @@ namespace ARPlayer.Scripts
             var hit = s_Hits[0];
             if (!hit.trackable.gameObject.activeSelf)
                 return;
-            
-            // if (hit!=null && hit.trackable is ARPlane plane)
-            // {
-            //     switch (plane.alignment)
-            //     {
-            //         case PlaneAlignment.Vertical:
-            //             if (!CoreManager.sharedARState.IsDisplayingVerticalPlane())
-            //                 return;
-            //             break;
-            //         case PlaneAlignment.HorizontalDown:
-            //         case PlaneAlignment.HorizontalUp:
-            //             if (!CoreManager.sharedARState.IsDisplayingHorizontalPlane())
-            //                 return;
-            //             break;
-            //     }
-            // }
 
             // Create a new anchor
             CoreManager.SharedARManager.OnARRaycastHit(hit);
-            // var anchor = CreateAnchor(hit);
-            // if (anchor)
-            // {
-            //     // Remember the anchor so we can remove it later.
-            //     CoreManager.SharedARState.MyARAnchors.Add(anchor);
-            // }
-            // else
-            // {
-            //     //Logger.Log("Error creating anchor");
-            // }
         }
 
         static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
