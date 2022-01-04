@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ARPlayer.Scripts.Detection;
 using Lean.Gui;
+using MyBox;
 using Pixelplacement;
 using UnityEngine;
 
@@ -10,10 +11,19 @@ public class CameraPermissionState : State
     [SerializeField] private LeanWindow requestCamPermissionLeaWin;
     [SerializeField] private LeanWindow requestCamPermissionGrantedLeaWin;
 
-    [SerializeField] private ARCapabilityDetection arcd;
+    [Space]
+    [Header("Debug Purpose")]
+    //[SerializeField][ReadOnly] private ARCapabilityDetection _arCapabilityDetection;
+    [SerializeField][ReadOnly] private CameraPermissionManager _cameraPermissionManager;
     private void OnEnable()
     {
         Debug.Log("CameraPermissionState.OnEnable");
+        // if (_arCapabilityDetection == null)
+        //     _arCapabilityDetection = GetComponentInParent<ARCapabilityDetection>();
+        
+        if (_cameraPermissionManager == null)
+            _cameraPermissionManager = GetComponent<CameraPermissionManager>();
+        
         if (requestCamPermissionLeaWin == null)
         {
             return;
@@ -38,11 +48,11 @@ public class CameraPermissionState : State
 
     private void OnWindowOnAction()
     {
-        StartCoroutine(arcd.RequestCameraPermission(
+        StartCoroutine(_cameraPermissionManager.RequestCameraPermission(
             () =>
             {
-                requestCamPermissionLeaWin.TurnOff();
-                requestCamPermissionGrantedLeaWin.TurnOn();
+                requestCamPermissionLeaWin?.TurnOff();
+                requestCamPermissionGrantedLeaWin?.TurnOn();
             },
             () =>
             {
