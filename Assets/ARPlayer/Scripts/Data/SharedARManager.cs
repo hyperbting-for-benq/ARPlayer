@@ -229,7 +229,7 @@ namespace ARPlayer.Scripts.Data
             
             sharedState.VerticalObject = aranchor;
             
-            // attach proper object over aranchor
+            // Attach proper object over aranchor
             var go = GameObject.Instantiate<GameObject>(coreManager.wallScreenPrefab);
 
             var araw = aranchor.GetComponent<ARAnchorWorker>();
@@ -356,6 +356,7 @@ namespace ARPlayer.Scripts.Data
 
             coreManager.myFSM.Next();
         }
+        
         private void ScanningProjector_Reset()
         {
             if (sharedState.HorizontalObject == null)
@@ -378,6 +379,35 @@ namespace ARPlayer.Scripts.Data
             coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
 
             coreManager.notificationUser.ShowNotification("EnterObjectsPlacedState");
+            
+            // Let Horizontal z Facing Vertical
+            if (sharedState.HorizontalObject == null)
+            {
+                Debug.LogWarning("LeaveObjectsPlacedState HorizontalObject_NotFound");
+                return;
+            }
+            
+            if (sharedState.VerticalObject == null)
+            {
+                Debug.LogWarning("LeaveObjectsPlacedState VerticalObject_NotFound");
+                return;
+            }
+            
+            var araw = sharedState.HorizontalObject.GetComponent<ARAnchorWorker>();
+            if (araw == null)
+            {
+                Debug.LogWarning("LeaveObjectsPlacedState HorizontalObject_ARAnchorWorker_NotFound");
+                return;
+            }
+            
+            var araw2 = sharedState.VerticalObject.GetComponent<ARAnchorWorker>();
+            if (araw2 == null)
+            {
+                Debug.LogWarning("LeaveObjectsPlacedState VerticalObject_ARAnchorWorker_NotFound");
+                return;
+            }
+            
+            araw.SetFacingRefTransform(araw2.root);
         }
         
         public void LeaveObjectsPlacedState()
