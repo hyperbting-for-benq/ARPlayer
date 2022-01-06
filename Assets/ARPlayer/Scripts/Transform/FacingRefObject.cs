@@ -2,31 +2,61 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG;
 using DG.Tweening;
 
 public class FacingRefObject : MonoBehaviour
 {
-    public Transform refTransform;
     public bool ignorePitch = true;
-    private void Update()
+    
+    [Header("Debug Purpose")]
+    [SerializeField][MyBox.ReadOnly] private Transform refTransform;
+    [SerializeField][MyBox.ReadOnly] private Vector3 refPoint;
+
+    #region Unity LifeCycle
+    private void OnDisable()
     {
-        LookAt(refTransform);
+        _tweener?.Kill(true);
     }
 
-    [SerializeField][MyBox.ReadOnly] private Tweener _tweener;
-    void LookAt(Transform refTransform)
+    private void FixedUpdate()
+    {
+        UpdateRefTransform();
+            
+        LookAt(refPoint);
+    }
+    #endregion
+
+    public void SetRefTransform(Transform refTra)
+    {
+        refTransform = refTra;
+    }
+
+    public void SetRefPoint(Vector3 refPt)
+    {
+        refTransform = null;
+        refPoint = refPt;
+    }
+    
+    private void UpdateRefTransform()
     {
         if (refTransform == null)
             return;
-        
-        if (_tweener!=null && _tweener.IsPlaying())
-            return;
 
+        refPoint = refTransform.position;
+    }
+
+    [SerializeField][MyBox.ReadOnly] private Tweener _tweener;
+    private void LookAt(Vector3 refPos)
+    {
+        if (_tweener!=null)
+            return;
+        
         var ac = AxisConstraint.None;
         if (ignorePitch)
             ac = AxisConstraint.Y;
         
-        _tweener = transform.DOLookAt(refTransform.position, 1f, ac);
+        _tweener = transform
+            .DOLookAt(refPos, 1f, ac)
+            .OnComplete( ()=>{_tweener = null;} );
     }
 }

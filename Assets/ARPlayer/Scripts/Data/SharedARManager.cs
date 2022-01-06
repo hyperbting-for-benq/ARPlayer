@@ -347,13 +347,16 @@ namespace ARPlayer.Scripts.Data
         
         private void ScanningProjector_OnHorizontalObjectPlaced()
         {
-            if (sharedState.HorizontalObject != null)
+            // Draw line between Vertical and Horizontal Object
+            if (sharedState.HorizontalObject != null && sharedState.VerticalObject != null)
             {
-                var lDrawer = sharedState.HorizontalObject.GetComponentInChildren<LineDrawer>();
+                var araw0 = sharedState.VerticalObject.GetComponent<ARAnchorWorker>();
+                araw0.SetupLine(sharedState.HorizontalObject.transform.position);
                 
-                lDrawer.Setup(1.56f);
+                var araw1 = sharedState.HorizontalObject.GetComponent<ARAnchorWorker>();
+                araw1.SetupLine(sharedState.VerticalObject.transform.position);
             }
-
+            
             coreManager.myFSM.Next();
         }
         
