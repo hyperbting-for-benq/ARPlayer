@@ -227,14 +227,15 @@ namespace ARPlayer.Scripts.Data
             if (!TryAttachARAnchor(arRHit, out var aranchor))
                 return;
             
-            sharedState.VerticalObject = aranchor;
-            
             // Attach proper object over aranchor
             var go = GameObject.Instantiate<GameObject>(coreManager.wallScreenPrefab);
 
             var araw = aranchor.GetComponent<ARAnchorWorker>();
-            if(araw != null)
-                araw.PlaceObject(ARAnchorWorker.ObjectOrientation.Vertical, go.transform);
+            if (araw == null)
+                return;
+            
+            araw.PlaceObject(ARAnchorWorker.ObjectOrientation.Vertical, go.transform);
+            sharedState.VerticalObject = aranchor;
         }
 
         private void ScanningScreen_OnVerticalObjectPlaced()
