@@ -9,20 +9,18 @@ using UnityEngine;
 public class CameraPermissionState : State
 {
     [SerializeField] private LeanWindow requestCamPermissionLeaWin;
-    [SerializeField] private LeanWindow requestCamPermissionGrantedLeaWin;
-
+    [SerializeField] private LeanWindow requestCamPermissionDeniedLeaWin;
+    
     [Space]
     [Header("Debug Purpose")]
-    //[SerializeField][ReadOnly] private ARCapabilityDetection _arCapabilityDetection;
-    [SerializeField][ReadOnly] private CameraPermissionManager _cameraPermissionManager;
+    [SerializeField][ReadOnly] private ARCapabilityDetection arCapabilityDetection;
+    [SerializeField][ReadOnly] private CameraPermissionManager cameraPermissionManager;
     private void OnEnable()
     {
         Debug.Log("CameraPermissionState.OnEnable");
-        // if (_arCapabilityDetection == null)
-        //     _arCapabilityDetection = GetComponentInParent<ARCapabilityDetection>();
         
-        if (_cameraPermissionManager == null)
-            _cameraPermissionManager = GetComponent<CameraPermissionManager>();
+        if (cameraPermissionManager == null)
+            cameraPermissionManager = GetComponent<CameraPermissionManager>();
         
         if (requestCamPermissionLeaWin == null)
         {
@@ -48,26 +46,17 @@ public class CameraPermissionState : State
 
     private void OnWindowOnAction()
     {
-        StartCoroutine(_cameraPermissionManager.RequestCameraPermission(
+        StartCoroutine(cameraPermissionManager.CheckCameraPermission(
             () =>
             {
                 requestCamPermissionLeaWin?.TurnOff();
-                requestCamPermissionGrantedLeaWin?.TurnOn();
+                arCapabilityDetection.GoToCameraGranted();
             },
             () =>
             {
-                
+                requestCamPermissionLeaWin?.TurnOff();
+                requestCamPermissionDeniedLeaWin?.TurnOn();
             }
         ));
-    }
-
-    public void ShowPermissionGrantWindow()
-    {
-        if (requestCamPermissionGrantedLeaWin == null)
-        {
-            return;
-        }
-        
-        requestCamPermissionGrantedLeaWin.TurnOn();
     }
 }

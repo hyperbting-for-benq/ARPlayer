@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ARPlayer/Scenes/Additive/010ARCapability.unity
     guid: 197b880c4e995444bad75c03b5a8d442
-  - enabled: 1
+  - enabled: 0
     path: Assets/ARPlayer/Scenes/200ARMain.unity
     guid: 4aa8ddaf86b924f75ba194dcc0053490
   m_configObjects:

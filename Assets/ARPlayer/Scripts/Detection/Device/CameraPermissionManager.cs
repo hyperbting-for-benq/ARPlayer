@@ -10,6 +10,8 @@ public class CameraPermissionManager : MonoBehaviour
         {
             get
             {
+                Debug.LogWarning($"HaveCameraPermission: {UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera)}, {Application.HasUserAuthorization(UserAuthorization.WebCam)}");
+
                 #if UNITY_ANDROID
                 return UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera);
                 #else
@@ -18,7 +20,7 @@ public class CameraPermissionManager : MonoBehaviour
             }
         }
         
-        public IEnumerator RequestCameraPermission(Action success, Action fail)
+        public IEnumerator CheckCameraPermission(Action success, Action fail)
         {
             yield return new WaitForSeconds(1f);
             
@@ -47,13 +49,36 @@ public class CameraPermissionManager : MonoBehaviour
                 fail?.Invoke();
             }
         }
-        
+
         private void ListWebCams()
         {
             foreach (var device in WebCamTexture.devices)
             {
                 Debug.Log("Name: " + device.name);
             }
+        }
+        #endregion
+        
+        #region test
+        [ContextMenu("Debug HaveCameraPermission")]
+        private void DebugHaveCameraPermission()
+        {
+            Debug.LogWarning($"DebugHaveCameraPermission: {HaveCameraPermission} !");
+        }
+        
+        [ContextMenu("Debug RequestCameraPermission")]
+        private void DebugRequestCameraPermission()
+        {
+            StartCoroutine(CheckCameraPermission(
+                () =>
+                {
+                    Debug.LogWarning("DebugRequestCameraPermission: CameraPermissionGranted !");
+                },
+                () =>
+                {
+                    Debug.LogWarning("DebugRequestCameraPermission: CameraPermissionDenied !");
+                }
+            ));
         }
         #endregion
 }

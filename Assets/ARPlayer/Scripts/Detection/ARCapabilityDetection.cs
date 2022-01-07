@@ -14,71 +14,96 @@ namespace ARPlayer.Scripts.Detection
         [SerializeField] [MyBox.ReadOnly] private StateMachine stateMachine;
         [Space] 
         //[SerializeField] private GameObject CheckerLoaded;
-        [SerializeField] private GameObject CapabilityDisabled;
-        [SerializeField] private GameObject CapabilityEnabled;
-        [SerializeField] private GameObject CameraPermissionCheck;
-        [SerializeField] private GameObject EmptyState;
+        [SerializeField] private GameObject capabilityEnabled;
+        
+        [SerializeField] private GameObject cameraPermissionCheck;
+        [SerializeField] private GameObject cameraPermissionGranted;
+        
+        [SerializeField] private GameObject emptyState;
 
-        [Space] 
-        [SerializeField][ReadOnly] private MainManager _mainManager; 
+        [Header("Debug Purpose")] 
+        [SerializeField][ReadOnly] private MainManager mainManager; 
+        
+        #region Unity lifecycle 
         private void OnEnable()
         {
-            _mainManager = FindObjectOfType<MainManager>();
+            mainManager = FindObjectOfType<MainManager>();
             stateMachine = GetComponent<StateMachine>();
         }
 
         private void OnDisable()
         {
-            _mainManager = null;
+            mainManager = null;
         }
+        #endregion
+        
+        #region public
+        // public void DetectARCapability()
+        // {
+        //     Debug.Log($"DetectARCapability Begin");
+        //     StartCoroutine(DetectARCapability(
+        //             () =>
+        //             {
+        //                 if (CheckPlaneDetectionCapability())
+        //                 {
+        //                     stateMachine.ChangeState(capabilityEnabled);
+        //                 }
+        //                 else
+        //                 {
+        //                     Debug.LogError("Cannot DetectPlane!");
+        //                 }
+        //             },
+        //             () =>
+        //             {
+        //             },
+        //             () =>
+        //             {
+        //                 Debug.LogError("Unexpected State Detected!");
+        //             }
+        //         ) 
+        //     );
+        // }
 
-        private void Start()
+        public void DebugPreviousState()
         {
-            StartCoroutine(DetectARCapability(
-                    () =>
-                    {
-                        if (CheckPlaneDetectionCapability())
-                        {
-                            stateMachine.ChangeState(CapabilityEnabled);
-                        }
-                        else
-                        {
-                            Debug.LogError("Cannot DetectPlane!");
-                            stateMachine.ChangeState(CapabilityDisabled);
-                        }
-                    },
-                    () =>
-                    {
-                        stateMachine.ChangeState(CapabilityDisabled);
-                    },
-                () =>
-                    {
-                        Debug.LogError("Unexpected State Detected!");
-                        stateMachine.ChangeState(CapabilityDisabled);
-                    }
-                ) 
-            );
+            stateMachine.Previous();
         }
-
+        
+        public void DebugNextState()
+        {
+            stateMachine.Next();
+        }
+        
+        public void GoToARCapbilityEnabled()
+        {
+            stateMachine.ChangeState(capabilityEnabled);
+        }
+        
         public void GoToCameraCheck()
         {
-            stateMachine.ChangeState(CameraPermissionCheck);
+            stateMachine.ChangeState(cameraPermissionCheck);
+        }
+        
+        public void GoToCameraGranted()
+        {
+            stateMachine.ChangeState(cameraPermissionGranted);
         }
         
         public void GoToARMain()
         {
-            stateMachine.ChangeState(EmptyState);
+            stateMachine.ChangeState(emptyState);
             
-            if (_mainManager == null)
+            if (mainManager == null)
             {
                 Debug.LogError("MainManager Missing!");
                 return;
             }
 
-            _mainManager.LoadScene_ARMain();
+            mainManager.LoadScene_ARMain();
         }
-
-        private IEnumerator DetectARCapability(Action arSesStateEnabled, Action arSesStateDisabled, Action unexpected)
+        #endregion
+        
+        public IEnumerator DetectARCapability(Action arSesStateEnabled, Action arSesStateDisabled, Action unexpected)
         {
 
             yield return new WaitForSeconds(1f);
@@ -94,7 +119,7 @@ namespace ARPlayer.Scripts.Detection
             {
                 yield return new WaitForSeconds(1f);
                 
-                Debug.LogWarning("Unexpected State Occurred");
+                Debug.LogWarning($"Unexpected State [{ARSession.state}] Occurred");
                 unexpected?.Invoke();
             }
 
@@ -136,21 +161,22 @@ namespace ARPlayer.Scripts.Detection
         // }
         // #endregion
 
-        private bool CheckPlaneDetectionCapability()
+        public bool CheckPlaneDetectionCapability()
         {
+            Debug.Log("PlaneDetection Checking");
             var planeDescriptors = new List<XRPlaneSubsystemDescriptor>();
             SubsystemManager.GetSubsystemDescriptors(planeDescriptors);
 
             if (planeDescriptors.Count <= 0) 
                 return false;
             
-            Debug.Log("PlaneDetection Supported");
+            Debug.Log("PlaneDetection SUPPORTED");
             foreach(var planeDescriptor in planeDescriptors)
             {
                 if (!planeDescriptor.supportsClassification) 
                     continue;
                 
-                Debug.Log("Plane Classification Supported");
+                Debug.Log("Plane Classification SUPPORTED");
                 break;
             }
 
