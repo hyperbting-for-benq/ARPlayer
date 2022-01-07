@@ -326,8 +326,7 @@ namespace ARPlayer.Scripts.Data
                 Debug.LogWarning("ScanningProjector_OnARRaycastHit ARAnchorWorker_NotFound");
                 return;
             }
-
-            sharedState.HorizontalObject = aranchor;
+            
             GameObject go;
             switch (plane.alignment)
             {
@@ -341,8 +340,10 @@ namespace ARPlayer.Scripts.Data
                     break;
                 default:
                     Debug.LogWarning($"ScanningProjector_OnARRaycastHit Unexpected PlaneAlignment:{plane.alignment}");
-                    break;
+                    return;//break;
             }
+            
+            sharedState.HorizontalObject = aranchor;
         }
         
         private void ScanningProjector_OnHorizontalObjectPlaced()
