@@ -26,6 +26,7 @@ public class FacingRefObject : MonoBehaviour
     }
     #endregion
 
+    #region Setter
     public void SetRefTransform(Transform refTra)
     {
         refTransform = refTra;
@@ -36,6 +37,7 @@ public class FacingRefObject : MonoBehaviour
         refTransform = null;
         refPoint = refPt;
     }
+    #endregion
     
     private void UpdateRefTransform()
     {
