@@ -199,6 +199,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Notification (LeanPulse)
       objectReference: {fileID: 0}
+    - target: {fileID: 4319246786754898422, guid: 0a8cc584e53384fb99094d85803c243d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a8cc584e53384fb99094d85803c243d, type: 3}
 --- !u!224 &7329653451923265894 stripped

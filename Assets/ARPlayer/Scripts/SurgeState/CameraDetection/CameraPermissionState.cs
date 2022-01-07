@@ -1,62 +1,78 @@
-using System.Collections;
-using System.Collections.Generic;
 using ARPlayer.Scripts.Detection;
 using Lean.Gui;
 using MyBox;
 using Pixelplacement;
 using UnityEngine;
 
-public class CameraPermissionState : State
+namespace ARPlayer.Scripts.SurgeState.CameraDetection
 {
-    [SerializeField] private LeanWindow requestCamPermissionLeaWin;
-    [SerializeField] private LeanWindow requestCamPermissionDeniedLeaWin;
-    
-    [Space]
-    [Header("Debug Purpose")]
-    [SerializeField][ReadOnly] private ARCapabilityDetection arCapabilityDetection;
-    [SerializeField][ReadOnly] private CameraPermissionManager cameraPermissionManager;
-    private void OnEnable()
+    public class CameraPermissionState : State
     {
-        Debug.Log("CameraPermissionState.OnEnable");
+        [SerializeField] private LeanWindow requestCamPermissionLeaWin;
+        [SerializeField] private LeanWindow requestCamPermissionDeniedLeaWin;
+        [Space]
+        [SerializeField] private LeanButton requestCamPermissionDeniedLeaBtn;
+
+        [Header("Debug Purpose")] 
+        public bool debugAlwaysCameraFail = false;
+        [SerializeField][ReadOnly] private ARCapabilityDetection arCapabilityDetection;
+        [SerializeField][ReadOnly] private CameraPermissionManager cameraPermissionManager;
+        private void OnEnable()
+        {
+            Debug.Log("CameraPermissionState.OnEnable");
         
-        if (cameraPermissionManager == null)
+            arCapabilityDetection = GetComponentInParent<ARCapabilityDetection>();
             cameraPermissionManager = GetComponent<CameraPermissionManager>();
+
+            requestCamPermissionLeaWin?.OnOn.AddListener(OnCheckingWindowOnAction);
         
-        if (requestCamPermissionLeaWin == null)
-        {
-            return;
+            requestCamPermissionDeniedLeaBtn?.OnClick.AddListener(CheckCameraPermission);
+            requestCamPermissionDeniedLeaBtn.interactable = true;
+        
+            CheckCameraPermission();
         }
 
-        requestCamPermissionLeaWin.OnOn.AddListener(OnWindowOnAction);
-
-        //popup modal
-        requestCamPermissionLeaWin.TurnOn();
-    }
-
-    private void OnDisable()
-    {
-        Debug.Log("CameraPermissionState.OnDisable");
-        if (requestCamPermissionLeaWin == null)
+        private void OnDisable()
         {
-            return;
-        }
+            Debug.Log("CameraPermissionState.OnDisable");
         
-        requestCamPermissionLeaWin.OnOn.RemoveListener(OnWindowOnAction);
-    }
+            requestCamPermissionLeaWin?.OnOn.RemoveListener(OnCheckingWindowOnAction);
+            requestCamPermissionDeniedLeaBtn?.OnClick.RemoveListener(CheckCameraPermission);
+        
+            requestCamPermissionLeaWin?.TurnOff();
+            requestCamPermissionDeniedLeaWin?.TurnOff();
+        }
 
-    private void OnWindowOnAction()
-    {
-        StartCoroutine(cameraPermissionManager.CheckCameraPermission(
-            () =>
-            {
-                requestCamPermissionLeaWin?.TurnOff();
-                arCapabilityDetection.GoToCameraGranted();
-            },
-            () =>
+        private void CheckCameraPermission()
+        {
+            Debug.Log("CheckCameraPermission");
+            //popup modal
+            requestCamPermissionDeniedLeaWin?.TurnOff();
+            
+            requestCamPermissionLeaWin?.TurnOn();
+        }
+
+        private void OnCheckingWindowOnAction()
+        {
+            if (debugAlwaysCameraFail)
             {
                 requestCamPermissionLeaWin?.TurnOff();
                 requestCamPermissionDeniedLeaWin?.TurnOn();
+                return;
             }
-        ));
+
+            StartCoroutine(cameraPermissionManager.CheckCameraPermission(
+                () =>
+                {
+                    requestCamPermissionLeaWin?.TurnOff();
+                    arCapabilityDetection.GoToCameraGranted();
+                },
+                () =>
+                {
+                    requestCamPermissionLeaWin?.TurnOff();
+                    requestCamPermissionDeniedLeaWin?.TurnOn();
+                }
+            ));
+        }
     }
 }

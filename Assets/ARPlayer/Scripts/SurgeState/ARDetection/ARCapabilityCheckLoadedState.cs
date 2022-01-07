@@ -12,6 +12,7 @@ namespace ARPlayer.Scripts.SurgeState.ARDetection
         [SerializeField] private Text txt;
         [SerializeField] private LeanWindow arCapCheckLeaWin;
         [SerializeField] private LeanWindow arCapDeniedLeaWin;
+        [Space]
         [SerializeField] private LeanButton arCapDeniedLeaBtn;
         
         [Header("Debug purpose")]
