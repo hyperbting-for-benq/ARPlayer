@@ -750,9 +750,61 @@ PrefabInstance:
       propertyPath: m_Name
       value: UICanvas_000_115main_ARCapabilityDetecting
       objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: downTransitions.roots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: clickTransitions.roots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: downTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: normalTransitions.roots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: clickTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: normalTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: interactableTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: downTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: clickTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: normalTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218964762767814618, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: interactableTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8135484678128938516, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8135484678128938516, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
       propertyPath: expectedInteractable
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8135484678508209385, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: m_Name
+      value: ARCap Checking Modal (LeanWindow)
       objectReference: {fileID: 0}
     - target: {fileID: 8135484678508209387, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
       propertyPath: on
@@ -769,6 +821,14 @@ PrefabInstance:
     - target: {fileID: 8135484678508209396, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
       propertyPath: m_BlocksRaycasts
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8135484679723030305, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
+      propertyPath: m_Text
+      value: '<size=60>Checking
+
+        Augmented Reality
+
+        Capbility ...</size>'
       objectReference: {fileID: 0}
     - target: {fileID: 8135484680020232951, guid: 1505c94b8a0ec6f4283aabd5cfd671a2, type: 3}
       propertyPath: m_LocalScale.x

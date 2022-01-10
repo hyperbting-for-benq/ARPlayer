@@ -9,11 +9,61 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8674924176381715949, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_Text
-      value: '<size=60>Camera Permission!</size>
+      value: '<size=60>Checking
+
+        Camera Permission!</size>
 
 
-        AR Service Requires Camera
-        Usage.'
+        AR Service
+        Requires Camera Usage.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: downTransitions.roots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: clickTransitions.roots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: downTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: normalTransitions.roots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: clickTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: normalTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: interactableTransitions.entries.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: downTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: clickTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: normalTransitions.entries.Array.data[0].speed
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674924176935099608, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
+      propertyPath: interactableTransitions.entries.Array.data[0].speed
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8674924177581757989, guid: b73c21a1380410b43b47a2a1215689a6, type: 3}
       propertyPath: m_Name
