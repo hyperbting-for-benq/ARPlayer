@@ -10,7 +10,10 @@ public class CameraPermissionManager : MonoBehaviour
         {
             get
             {
-                Debug.LogWarning($"HaveCameraPermission: {UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera)}, {Application.HasUserAuthorization(UserAuthorization.WebCam)}");
+                Debug.LogWarningFormat($"HaveCameraPermission: Android:{0}, Non-Android:{1}",
+                                 UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera),
+                                 Application.HasUserAuthorization(UserAuthorization.WebCam)
+                                 );
 
                 #if UNITY_ANDROID
                 return UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.Camera);
@@ -28,7 +31,6 @@ public class CameraPermissionManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(2f);
                 
-                
                 #if UNITY_ANDROID
                 UnityEngine.Android.Permission.RequestUserPermission(UnityEngine.Android.Permission.Camera);
                 #else
@@ -36,16 +38,18 @@ public class CameraPermissionManager : MonoBehaviour
                 #endif
             }
 
+            Debug.Log("CheckCameraPermission: After RequestUserPermission/ RequestUserAuthorization");
+            
             if (HaveCameraPermission)
             {
-                Debug.Log("Camera Permission Authorized!");
+                Debug.Log("CheckCameraPermission: CameraPermissionAuthorized!");
                 ListWebCams();
                 
                 success?.Invoke();
             }
             else
             {
-                //TODO:
+                Debug.Log("CheckCameraPermission: CameraPermissionDenied!");
                 fail?.Invoke();
             }
         }
@@ -54,8 +58,15 @@ public class CameraPermissionManager : MonoBehaviour
         {
             foreach (var device in WebCamTexture.devices)
             {
-                Debug.Log("Name: " + device.name);
+                Debug.Log("CamName: " + device.name);
             }
+        }
+
+        private void OpeniOSSettings()
+        {
+            #if UNITY_IOS
+            Application.OpenURL("app-settings:");
+            #endif
         }
         #endregion
         

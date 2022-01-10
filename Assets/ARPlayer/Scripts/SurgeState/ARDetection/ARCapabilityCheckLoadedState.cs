@@ -22,9 +22,9 @@ namespace ARPlayer.Scripts.SurgeState.ARDetection
         private void OnEnable()
         {
             arCapabilityDetection = GetComponentInParent<ARCapabilityDetection>();
-            arCapDeniedLeaBtn.OnClick.AddListener(CheckARCApbility);
+            arCapDeniedLeaBtn.OnClick.AddListener(CheckARCapbility);
 
-            CheckARCApbility();
+            CheckARCapbility();
         }
 
         private void OnDisable()
@@ -33,11 +33,12 @@ namespace ARPlayer.Scripts.SurgeState.ARDetection
             
             arCapCheckLeaWin.TurnOff();
             arCapDeniedLeaWin.TurnOff();
-            
-            arCapDeniedLeaBtn.OnClick.RemoveListener(CheckARCApbility);
+
+            arCapDeniedLeaBtn.interactable = false;
+            arCapDeniedLeaBtn.OnClick.RemoveListener(CheckARCapbility);
         }
 
-        private void CheckARCApbility()
+        private void CheckARCapbility()
         {
             arCapDeniedLeaWin.TurnOff();
             arCapCheckLeaWin.TurnOn();
@@ -53,11 +54,16 @@ namespace ARPlayer.Scripts.SurgeState.ARDetection
                         else
                         {
                             Debug.LogError("Cannot DetectPlane!");
+                            
+                            arCapDeniedLeaBtn.interactable = true;
+                            
                             arCapCheckLeaWin.TurnOff();
                             arCapDeniedLeaWin.TurnOn();
                         }
                     },
                     () => {
+                        arCapDeniedLeaBtn.interactable = true;
+                        
                         arCapCheckLeaWin.TurnOff();
                         arCapDeniedLeaWin.TurnOn();
                     },
