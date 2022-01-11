@@ -29,6 +29,11 @@ namespace ARPlayer.Scripts
             UnityEngine.Assertions.Assert.AreApproximatelyEqual( dis, 0f);
         }
 
+        public void SetupLine(float len)
+        {
+            lineDrawer?.Setup(len);
+        }
+        
         public void SetupLine(Vector3 refPoint)
         {
             var plVer = BuildPlane(verticalPlane.transform);

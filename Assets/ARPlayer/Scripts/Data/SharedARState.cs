@@ -46,71 +46,83 @@ namespace ARPlayer.Scripts.Data
         public PlaneDisplayMode currentDisplayMode;
 
         #region InWorld ARAnchor
+        // public Dictionary<Guid, ARAnchor> anchors = new Dictionary<Guid, ARAnchor>();
+        //
+        // [ContextMenu("DebugPrint ARAnchor")]
+        // private void DebugPrintArAnchors()
+        // {
+        //     Debug.LogWarning($"{JsonConvert.SerializeObject(anchors)}");
+        // }
+        
         //Projector in two type
-        private ARAnchor m_HorizontalObject;
-        public ARAnchor HorizontalObject
-        {
-            get => m_HorizontalObject;
-            set
-            {
-                if (m_HorizontalObject != null && value == m_HorizontalObject)
-                    return;
-
-                m_HorizontalObject = value;
-                OnHorizontalObjectPlaced?.Invoke();
-            }
-        }
+        #region HorizontalObject as Projector
+        public ARAnchorState HorizontalObject = new ARAnchorState("HorizontalObject");
         [ContextMenu("Debug HorizontalObject")]
-        private void DebugHorizontalObject()
+        private void DebugPrintHorizontalObject()
         {
-            Debug.Log($"HorizontalObject?:{m_HorizontalObject==null}; {m_HorizontalObject?.ToString()}");
+            Debug.LogWarning(HorizontalObject.ToString());
         }
+        #endregion
         
-        public bool IsHorizontalObjectSet()
+        #region VerticalObject as Screen
+        public ARAnchorState VerticalObject = new ARAnchorState("VerticalObject");
+        [ContextMenu("Debug VerticalObject")]
+        private void DebugPrintVerticalObject()
         {
-            return !m_HorizontalObject;
+            Debug.LogWarning(VerticalObject.ToString());
         }
+        #endregion
         
-        public Action OnHorizontalObjectPlaced;
+        public void CleanAnchors()
+        {
+            HorizontalObject.Anchor = null; //HorizontalObject=null;
+            VerticalObject.Anchor = null; //VerticalObject=null;
+        }
 
-        //Screen here
-        private ARAnchor m_VerticalObject;
-        public ARAnchor VerticalObject
+        public void DrawlineBetweenVerticalHorizontalObject()
         {
-            get => m_VerticalObject;
-            set
+            if(!HorizontalObject.IsSet() || !VerticalObject.IsSet())
             {
-                if (m_VerticalObject != null && value == m_VerticalObject)
-                    return;
-
-                m_VerticalObject = value;
-                OnVerticalObjectPlaced?.Invoke();
+                return;
             }
+
+            VerticalObject.SetupLine(HorizontalObject.Anchor.transform.position);
+            HorizontalObject.SetupLine(VerticalObject.Anchor.transform.position);
         }
 
-        [ContextMenu("Debug VerticalARAnchor")]
-        private void DebugVerticalARAnchor()
+        public void SetHorizontalObjectFacingVerticalObject()
         {
-            Debug.Log($"VerticalObject?:{m_VerticalObject==null}; {m_VerticalObject?.ToString()}");
+             if (!HorizontalObject.IsSet())
+             {
+                 Debug.LogWarning("HorizontalObject_Facing_VerticalObject HorizontalObject_NotFound");
+                 return;
+             }
+             
+             if (!VerticalObject.IsSet())
+             {
+                 Debug.LogWarning("HorizontalObject_Facing_VerticalObject VerticalObject_NotFound");
+                 return;
+             }
+
+             var haw = HorizontalObject.AnchorWorker; 
+             if ( haw == null)
+             {
+                 Debug.LogWarning("HorizontalObject_Facing_VerticalObject HorizontalObject_ARAnchorWorker_NotFound");
+                 return;
+             }
+
+             var vaw = VerticalObject.AnchorWorker; 
+             if (vaw == null)
+             {
+                 Debug.LogWarning("HorizontalObject_Facing_VerticalObject VerticalObject_ARAnchorWorker_NotFound");
+                 return;
+             }
+             
+             haw.SetFacingRefTransform(vaw.root);
         }
 
-        public bool IsVerticalObjectSet()
-        {
-            return !m_VerticalObject;
-        }
-        
-        public Action OnVerticalObjectPlaced;
-        
         [JsonIgnore] public GameObject HorizontalObjectPrefab => coreManager.horizontalPlanePrefab;
         [JsonIgnore] public GameObject VerticalObjectPrefab => coreManager.verticalPlanePrefab;
-
-        public Dictionary<Guid, ARAnchor> anchors = new Dictionary<Guid, ARAnchor>();
-
-        [ContextMenu("DebugPrint ARAnchor")]
-        private void DebugPrintArAnchors()
-        {
-            Debug.LogWarning($"{JsonConvert.SerializeObject(anchors)}");
-        }
         #endregion
         
         #region Checker
@@ -158,5 +170,78 @@ namespace ARPlayer.Scripts.Data
         All,
         Vertical,
         Horizontal
+    }
+    
+    public class ARAnchorState
+    {
+        public string Name;
+        public Action OnObjectPlaced;
+
+        private ARAnchorWorker m_ARAnchorWorker;
+        public ARAnchorWorker AnchorWorker
+        {
+            get => m_ARAnchorWorker;
+        }
+
+        private ARAnchor m_ARAnchor;
+        public ARAnchor Anchor
+        {
+            get => m_ARAnchor;
+            set
+            {
+                if (value == null && m_ARAnchor != null)
+                    GameObject.Destroy(m_ARAnchor.gameObject);
+
+                m_ARAnchor = value;
+                if (value != null)
+                {
+                    m_ARAnchorWorker = value.GetComponent<ARAnchorWorker>();
+                    OnObjectPlaced?.Invoke();
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("ARAnchorState:{0}, nullARAnchor?{1}, IsSet:{2}", Name, m_ARAnchor==null, IsSet());
+        }
+            
+        public bool IsSet()
+        {
+            return m_ARAnchor!=null;
+        }
+
+        public ARAnchorState(string name)
+        {
+            Name = name;
+        }
+
+        public void SetupLine<T>(T data)
+        {
+            if (!IsSet())
+            {
+                Debug.Log($"ARAnchorState.SetupLine CannotFindObjectSet");
+                return;
+            }
+            
+            if (m_ARAnchorWorker == null)
+            {
+                Debug.Log($"ARAnchorState.SetupLine CannotFindARAnchorWorker");
+                return;
+            }
+            
+            switch (data)
+            {
+                case Vector3 v3:
+                    m_ARAnchorWorker.SetupLine(v3);
+                    break;
+                case float fl:
+                    m_ARAnchorWorker.SetupLine(fl);
+                    break;
+                default:
+                    Debug.LogWarning($"ARAnchorState.SetupLine UnexpectedDataType Found: {data.GetType()}");
+                    break;
+            }
+        }
     }
 }
