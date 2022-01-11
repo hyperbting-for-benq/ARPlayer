@@ -85,7 +85,7 @@ namespace ARPlayer.Scripts.Data
         #region ARRaycastHit
         public Action<ARRaycastHit> OnARRaycastHit = (arrh) =>
         {
-            Debug.Log($"OnARRaycastHit: {arrh.trackableId} {arrh.hitType} {arrh.pose}");
+            Debug.Log($"OnARRaycastHit[default]: {arrh.trackableId} {arrh.hitType} {arrh.pose}");
         };
         #endregion
         
@@ -111,15 +111,6 @@ namespace ARPlayer.Scripts.Data
             }
 
             Debug.Log($"anchor sessionId:{anchor.sessionId}, Attached to plane trackableId:{plane.trackableId}");
-            return true;
-        }
-
-        public bool RemoveAnchor(ARAnchor anchor)
-        {
-            
-            //return anchor != null && RemoveAnchor(anchor.sessionId);
-
-            GameObject.Destroy(anchor.gameObject);
             return true;
         }
         #endregion

@@ -81,8 +81,15 @@ namespace ARPlayer.Scripts.Data
 
         public void DrawlineBetweenVerticalHorizontalObject()
         {
-            if(!HorizontalObject.IsSet() || !VerticalObject.IsSet())
+            if (!HorizontalObject.IsSet())
             {
+                Debug.LogWarning("HorizontalObject_Facing_VerticalObject HorizontalObject_NotFound");
+                return;
+            }
+             
+            if (!VerticalObject.IsSet())
+            {
+                Debug.LogWarning("HorizontalObject_Facing_VerticalObject VerticalObject_NotFound");
                 return;
             }
 
@@ -189,6 +196,7 @@ namespace ARPlayer.Scripts.Data
             get => m_ARAnchor;
             set
             {
+                // from Valued2Null
                 if (value == null && m_ARAnchor != null)
                     GameObject.Destroy(m_ARAnchor.gameObject);
 
