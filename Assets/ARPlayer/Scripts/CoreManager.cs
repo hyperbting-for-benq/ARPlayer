@@ -75,5 +75,23 @@ namespace ARPlayer.Scripts
             myFSM.Previous();
         }
         #endregion
+
+        #region Debug States
+
+        [ContextMenu("Debug Placed Objects")]
+        private void DebugPrintPlacedObjects()
+        {
+            Debug.LogWarningFormat("DebugPrintPlacedObjects: HorizontalObjectSet:{0}, VerticalObjectSet:{1}",
+                CoreManager.SharedARState.HorizontalObject.IsSet(),
+                CoreManager.SharedARState.VerticalObject.IsSet()
+            );
+            
+            // Debug.LogWarningFormat("DebugPrintPlacedObjects: HorizontalObject:{0}, VerticalObject:{1}",
+            //     CoreManager.SharedARState.HorizontalObject,
+            //     CoreManager.SharedARState.VerticalObject
+            // );
+        }
+
+        #endregion
     }
 }

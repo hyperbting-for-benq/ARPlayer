@@ -16,6 +16,23 @@ namespace ARPlayer.Scripts
         public Transform horizontalTopBase;
         public Transform horizontalBottomBase;
 
+        [ContextMenu("Print ARAnchor")]
+        private void DebugPrintARAnchor()
+        {
+            var anchor = GetComponent<ARAnchor>();
+            if (anchor == null)
+            {
+                Debug.LogWarning("No ARAnchor found");
+                return;
+            }
+            
+            Debug.LogWarningFormat("ARAnchor name:{0}, guid:{1}, ptr:{2}",
+                anchor.name,
+                anchor.sessionId,
+                anchor.nativePtr.ToString()
+                );
+        }
+
         [ContextMenu("Print Normal")]
         private void DebugPrintNormal()
         {
