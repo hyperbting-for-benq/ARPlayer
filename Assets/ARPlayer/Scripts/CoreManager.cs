@@ -1,5 +1,6 @@
 using ARPlayer.Scripts.Data;
 using ARPlayer.Scripts.Detection;
+using Newtonsoft.Json.Serialization;
 using Pixelplacement;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -78,6 +79,17 @@ namespace ARPlayer.Scripts
 
         #region Debug States
 
+        [Header("Debug GridStay")]
+        [SerializeField] private bool debugGridStay = false;
+        public bool DebugGridStay
+        {
+            get => debugGridStay;
+            set
+            {
+                debugGridStay = value;
+            }
+        }
+
         [ContextMenu("Debug Placed Objects")]
         private void DebugPrintPlacedObjects()
         {
@@ -91,7 +103,6 @@ namespace ARPlayer.Scripts
             //     CoreManager.SharedARState.VerticalObject
             // );
         }
-
         #endregion
     }
 }

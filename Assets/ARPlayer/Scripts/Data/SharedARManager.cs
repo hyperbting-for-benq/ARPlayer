@@ -143,7 +143,7 @@ namespace ARPlayer.Scripts.Data
         public void EnterScanningScreenState()
         {
             Debug.Log("SharedARManager.EnterScanningScreenState");
-            sharedState.VerticalObject.Anchor = null; //ScanningScreen_Reset();
+            sharedState.VerticalObject.Clean(); //ScanningScreen_Reset();
             
             //Allow Scanning Vertical; Allow Vertical Place Interaction;
             coreManager.planeDisplayManager.SetVerticalScanningAndInteraction();
@@ -176,7 +176,7 @@ namespace ARPlayer.Scripts.Data
             if (sharedState.VerticalObject.IsSet())
             {
                 Debug.LogWarning($"SharedARManager.ScanningScreen_OnARRaycastHit VerticalObject Assigned");
-                return;
+                sharedState.VerticalObject.Clean(); //return;
             }
             
             //Assign Anchor AS VerticalObject
@@ -207,11 +207,28 @@ namespace ARPlayer.Scripts.Data
         public void EnterModifyingScreenState()
         {
             Debug.Log("SharedARManager.EnterModifyingScreenState");
+            
+            //Enable Place Interaction again in DEBUG
+            #region DebugGridStay
+            if (coreManager.DebugGridStay)
+            {
+                coreManager.planeDisplayManager.EnableVerticalPlaneInteraction(); //coreManager.planeDisplayManager.EnableAllPlaneInteraction(true);
+                OnARRaycastHit += ScanningScreen_OnARRaycastHit;
+            }
+            #endregion
         }
         
         public void LeaveModifyingScreenState()
         {
             Debug.Log("SharedARManager.LeaveModifyingScreenState");
+            
+            #region DebugGridStay
+            //Stop Place Interaction Always;
+            coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
+            
+            // Unregister Callbacks Always;
+            OnARRaycastHit -= ScanningScreen_OnARRaycastHit;
+            #endregion
         }
         #endregion
         
@@ -219,7 +236,7 @@ namespace ARPlayer.Scripts.Data
         public void EnterScanningProjectorState()
         {
             Debug.Log("SharedARManager.EnterScanningProjectorState");
-            sharedState.HorizontalObject.Anchor = null; //ScanningProjector_Reset();
+            sharedState.HorizontalObject.Clean(); //ScanningProjector_Reset();
             
             // Register Callback
             OnARRaycastHit += ScanningProjector_OnARRaycastHit;
@@ -248,10 +265,12 @@ namespace ARPlayer.Scripts.Data
         
         private void ScanningProjector_OnARRaycastHit(ARRaycastHit arRHit)
         {
+            Debug.Log($"SharedARManager.ScanningProjector_OnARRaycastHit Begin");
+
             if (sharedState.HorizontalObject.IsSet())
             {
                 Debug.LogWarning($"SharedARManager.ScanningProjector_OnARRaycastHit HorizontalObject Assigned");
-                return;
+                sharedState.HorizontalObject.Clean(); //return;
             }
 
             if (!TryAttachARAnchor(arRHit, out var aranchor))
@@ -281,20 +300,55 @@ namespace ARPlayer.Scripts.Data
                     go = GameObject.Instantiate(coreManager.floorProjectorPrefab);
                     araw.PlaceObject(ARAnchorWorker.ObjectOrientation.HorizontalBottom, go.transform);
                     break;
+                case PlaneAlignment.None:
+                case PlaneAlignment.Vertical:
+                case PlaneAlignment.NotAxisAligned:
                 default:
-                    Debug.LogWarning($"ScanningProjector_OnARRaycastHit Unexpected PlaneAlignment:{plane.alignment}");
+                    Debug.LogError($"ScanningProjector_OnARRaycastHit Unexpected PlaneAlignment:{plane.alignment}");
                     return;//break;
             }
             
             sharedState.HorizontalObject.Anchor = aranchor;
+            Debug.Log($"SharedARManager.ScanningProjector_OnARRaycastHit End");
         }
         
         private void ScanningProjector_OnHorizontalObjectPlaced()
         {
             // Draw line between Vertical and Horizontal Object
             sharedState.DrawlineBetweenVerticalHorizontalObject();
-            
             coreManager.myFSM.Next();
+        }
+        #endregion
+        
+        #region ModifingProjectorState
+        public void EnterModifyingProjectorState()
+        {
+            Debug.Log("SharedARManager.EnterModifyingProjectorState");
+            
+            //Enable Place Interaction again in DEBUG
+            #region DebugGridStay
+            if (coreManager.DebugGridStay)
+            {
+                coreManager.planeDisplayManager.EnableHorizontalPlaneInteraction();
+                OnARRaycastHit += ScanningProjector_OnARRaycastHit;
+            }
+            #endregion
+        }
+        
+        public void LeaveModifyingProjectorState()
+        {
+            Debug.Log("SharedARManager.LeaveModifyingProjectorState");
+            
+            #region DebugGridStay
+            //Stop Place Interaction Always;
+            coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
+            
+            // Unregister Callbacks Always;
+            OnARRaycastHit -= ScanningProjector_OnARRaycastHit;
+            #endregion
+            
+            // Let Horizontal z Facing Vertical
+            sharedState.SetHorizontalObjectFacingVerticalObject();
         }
         #endregion
         
@@ -302,17 +356,8 @@ namespace ARPlayer.Scripts.Data
         public void EnterObjectsPlacedState()
         {
             Debug.Log("SharedARManager.EnterObjectsPlacedState");
-            
-            //Stop Scanning Horizontal
-            coreManager.planeDisplayManager.StopPlaneScan();
-            
-            //Stop Place Interaction;
-            coreManager.planeDisplayManager.EnableAllPlaneInteraction(false);
 
             coreManager.notificationUser.ShowNotification("EnterObjectsPlacedState");
-            
-            // Let Horizontal z Facing Vertical
-            sharedState.SetHorizontalObjectFacingVerticalObject();
         }
         
         public void LeaveObjectsPlacedState()

@@ -7,13 +7,13 @@ namespace ARPlayer.Scripts.SurgeState
         private void OnEnable()
         {
             Debug.Log("ProjectorModificationState.OnEnable");
-            //CoreManager.SharedARManager.EnterModifyingScreenState();
+            CoreManager.SharedARManager.EnterModifyingProjectorState();
         }
 
         private void OnDisable()
         {
             Debug.Log("ProjectorModificationState.OnDisable");
-            //CoreManager.SharedARManager.LeaveModifyingScreenState();
+            CoreManager.SharedARManager.LeaveModifyingProjectorState();
         }
     }
 }

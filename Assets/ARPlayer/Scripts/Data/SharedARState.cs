@@ -198,7 +198,11 @@ namespace ARPlayer.Scripts.Data
             {
                 // from Valued2Null
                 if (value == null && m_ARAnchor != null)
-                    GameObject.Destroy(m_ARAnchor.gameObject);
+                {
+                    var go = m_ARAnchor.gameObject;
+                    GameObject.Destroy(m_ARAnchor);
+                    GameObject.Destroy(go);
+                }
 
                 m_ARAnchor = value;
                 if (value != null)
@@ -217,6 +221,12 @@ namespace ARPlayer.Scripts.Data
         public bool IsSet()
         {
             return m_ARAnchor!=null;
+        }
+
+        public void Clean()
+        {
+            Debug.LogWarning(" Cleaning Anchor");
+            Anchor = null;
         }
 
         public ARAnchorState(string name)

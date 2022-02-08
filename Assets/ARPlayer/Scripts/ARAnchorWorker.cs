@@ -26,7 +26,7 @@ namespace ARPlayer.Scripts
                 return;
             }
             
-            Debug.LogWarningFormat("ARAnchor name:{0}, guid:{1}, ptr:{2}",
+            Debug.LogWarningFormat("ARAnchor\nname:{0},\nguid:{1},\nptr:{2}",
                 anchor.name,
                 anchor.sessionId,
                 anchor.nativePtr.ToString()
@@ -55,17 +55,17 @@ namespace ARPlayer.Scripts
         {
             var plVer = BuildPlane(verticalPlane.transform);
             
-            #if UNITY_EDITOR
-            var normalPt = plVer.normal + verticalPlane.transform.position;
-            var go0 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            go0.transform.localScale = Vector3.one*0.1f;
-            go0.transform.position = verticalPlane.transform.position;
-            var go1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            go1.transform.localScale = Vector3.one*0.1f;
-            go1.transform.position = normalPt;
-            var newNor = (go1.transform.position - go0.transform.position).normalized;
-            Debug.LogWarning($"{newNor} vs {plVer.normal}");
-            #endif
+            // #if UNITY_EDITOR
+            // var normalPt = plVer.normal + verticalPlane.transform.position;
+            // var go0 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            // go0.transform.localScale = Vector3.one*0.1f;
+            // go0.transform.position = verticalPlane.transform.position;
+            // var go1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            // go1.transform.localScale = Vector3.one*0.1f;
+            // go1.transform.position = normalPt;
+            // var newNor = (go1.transform.position - go0.transform.position).normalized;
+            // Debug.LogWarning($"{newNor} vs {plVer.normal}");
+            // #endif
             
             Debug.LogWarning($" side:{plVer.GetSide(refPoint)}; vs 0 ide:{plVer.GetSide(Vector3.zero)}");
             
